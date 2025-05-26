@@ -1,0 +1,3224 @@
+# Códigos de programación
+
+# Primer Parcial
+
+### Grupo 1
+
+Programas de repaso. Ingreso de datos desde el teclado y salida a pantalla. Arreglo de enteros
+
+- Acceso al arreglo por medio de índice **✓**
+    
+    ```c
+    #include <stdio.h>
+    
+    int main()
+    {
+        int arreglo[5];
+        int i; // índice
+        
+        for(i = 0; i < 5; i++) {
+            printf("Ingresa un numero entero: ");
+            scanf("%d", &arreglo[i]);
+        }
+    
+        for(i = 0; i < 5; i++)
+            printf("Celda:%d Direccion de memoria: %lu Numero: %d\n", i, &arreglo[i], arreglo[i]);
+        
+        return 0;
+    
+        //Luis Enrique Cruz Estrella
+    }
+    
+    ```
+    
+- Acceso al arreglo por medio de apuntador **✓**
+    
+    ```c
+    #include <stdio.h>
+    
+    int main()
+    {
+        int arreglo[5];
+        int *ptr; //declaracion de puntero
+        
+        for(ptr=arreglo; ptr<&arreglo[5]; ptr++){ //asigna el puntero a la primera posicion del arreglo y la recorre de uno en uno
+            printf("Ingresa un numero entero: ");
+            scanf("%d", ptr);
+        }
+        
+        for(ptr=arreglo; ptr<&arreglo[5]; ptr++)
+            printf("Celda:%d Direccion de memoria: %lu Numero: %d\n", (int)(ptr-arreglo), ptr, *ptr); //Imprime los numero, asi como castea la resta para obtener un lu
+        return 0;
+        
+        //Luis Enrique Cruz Estrella
+    }
+    ```
+    
+- Acceso al arreglo por medio de apuntador doble **✓**
+    
+    ```c
+    #include <stdio.h>
+    
+    int main() {
+        int arreglo[5];  // Declaración de un arreglo de 5 enteros
+        int *ptr1, **ptr2;  // ptr1 es un puntero a entero, ptr2 es un puntero a puntero a entero
+    
+        ptr1 = arreglo;  // ptr1 apunta al inicio del arreglo
+    
+        // Bucle para ingresar valores en el arreglo usando doble puntero
+        for (ptr2 = &ptr1; *ptr2 < &arreglo[5]; *ptr2 = *ptr2 + 1) {
+            printf("Ingrese dato entero: \n");
+            scanf("%d", *ptr2);  // Se almacena el valor ingresado en la dirección apuntada por *ptr2
+        }
+    
+        // Bucle para imprimir los valores almacenados junto con sus direcciones
+        for (ptr1 = arreglo, ptr2 = &ptr1; *ptr2 < &arreglo[5]; *ptr2 = *ptr2 + 1) {
+            printf("\nEn la celda %d está el valor %d en la dirección %p",
+                   (int)(*ptr2 - arreglo),  // Índice calculado restando la dirección base
+                   **ptr2,  // Valor almacenado en la posición apuntada por *ptr2
+                   *ptr2);  // Dirección de memoria del elemento del arreglo
+        }
+    
+        return 0;
+    }
+    
+    ```
+    
+
+### Grupo 2
+
+Programas de repaso. Ingreso de datos desde el teclado y salida a pantalla Arreglo de Estructuras con cadena, entero y flotante.
+
+- Acceso al arreglo por medio de índice **✓**
+    
+    ```c
+    #include <stdio.h>
+    #include <stdlib.h>
+    
+    struct persona {
+        char nombre[30];
+        int edad;
+        float est;
+        char sexo;
+    };
+    
+    int main() {
+        struct persona arreglo[5];
+        int i;
+        
+        printf("El tamaño del dato persona es %ld\n", sizeof(struct persona));
+    
+        for (i = 0; i < 5; i++) {
+            printf("\nIngresa nombre: ");
+            fgets(arreglo[i].nombre, 30, stdin);
+            
+            printf("Ingresa edad: ");
+            scanf("%d", &arreglo[i].edad);
+            
+            printf("Ingresa estatura: ");
+            scanf("%f", &arreglo[i].est);
+            
+            printf("Ingresa sexo: ");
+            scanf(" %c", &arreglo[i].sexo);
+            
+            fflush(stdin);
+        }
+    
+        for (i = 0; i < 5; i++) {
+            printf("\n\nEn la celda %d está en la dirección %lu", i, &arreglo[i]);
+            printf("\nEl nombre es %s y está en la dirección %lu", arreglo[i].nombre, &arreglo[i].nombre);
+            printf("\nLa edad es %d y está en la dirección %lu", arreglo[i].edad, &arreglo[i].edad);
+            printf("\nLa estatura es %.2f y está en la dirección %lu", arreglo[i].est, &arreglo[i].est);
+            printf("\nEl sexo es %c y está en la dirección %lu\n", arreglo[i].sexo, &arreglo[i].sexo);
+        }
+    
+        return 0;
+    }
+    
+    ```
+    
+- Acceso al arreglo por medio de apuntador **✓**
+    
+    ```c
+    #include<stdio.h>
+    
+    struct persona {
+        char nombre[30];
+        int edad;
+        float estatura;
+        char sexo;
+    };
+    
+    int main() {
+        struct persona arreglo[5], *ptr;
+    
+        for(ptr=arreglo; ptr<&arreglo[5]; ptr++){
+            printf("\nIngresa el nombre: ");
+            gets(ptr->nombre);
+            fflush(stdin);
+            printf("Ingresa la edad: ");
+            scanf("%d", &ptr->edad);
+            fflush(stdin);
+            printf("Ingresa la estatura: ");
+            scanf("%f", &ptr->estatura);
+            fflush(stdin);
+            printf("Ingresa el sexo: ");
+            scanf("%c", &ptr->sexo);
+            fflush(stdin);
+        }
+    
+        printf("La estructura mide %d\n", sizeof(struct persona));
+        for(ptr=arreglo; ptr<&arreglo[5]; ptr++){
+            printf("\nEn la celda %d y en la direccion %lu\n", (int)(ptr-&arreglo[0]), ptr);
+            printf("Nombre: %s Direccion : %lu\n", ptr->nombre, &ptr->nombre);
+            printf("Edad: %d Direccion : %lu\n", ptr->edad, &ptr->edad);
+            printf("Estatura: %f Direccion : %lu\n", ptr->estatura, &ptr->estatura);
+            printf("Sexo: %c Direccion : %lu\n", ptr->sexo, &ptr->sexo);
+        }
+        return 0;
+    }
+    ```
+    
+- Acceso al arreglo por medio de apuntador doble **✓**
+    
+    ```c
+    #include<stdio.h>
+    
+    struct persona {
+        char nombre[30];
+        int edad;
+        float estatura;
+        char sexo;
+    };
+    
+    int main() {
+        struct persona arreglo[5], *ptr, **ptr2;
+    
+        for(ptr = arreglo, ptr2=&ptr; *ptr2 < &arreglo[5]; (*ptr2)++){
+            printf("\nIngresa el nombre: ");
+            gets((*ptr2)->nombre);
+            fflush(stdin);
+            printf("Ingresa la edad: ");
+            scanf("%d", &(*ptr2)->edad);
+            fflush(stdin);
+            printf("Ingresa la estatura: ");
+            scanf("%f", &(*ptr2)->estatura);
+            fflush(stdin);
+            printf("Ingresa el sexo: ");
+            scanf(" %c", &(*ptr2)->sexo);
+            fflush(stdin);
+        }
+    
+        printf("La estructura mide %d\n", sizeof(struct persona));
+        for(ptr = arreglo, ptr2=&ptr; *ptr2 < &arreglo[5]; (*ptr2)++){
+            printf("\nEn la celda %d y en la direccion %lu\n", (int)(*ptr2 - &arreglo[0]), *ptr2);
+            printf("Nombre: %s Direccion : %lu\n", (*ptr2)->nombre, &(*ptr2)->nombre);
+            printf("Edad: %d Direccion : %lu\n", (*ptr2)->edad, &(*ptr2)->edad);
+            printf("Estatura: %f Direccion : %lu\n", (*ptr2)->estatura, &(*ptr2)->estatura);
+            printf("Sexo: %c Direccion : %lu\n", (*ptr2)->sexo, &(*ptr2)->sexo);
+        }
+        return 0;
+    }
+    ```
+    
+
+### Grupo 3
+
+Programas de repaso. Ingreso de datos desde el teclado y salida a pantalla. Estructura que encapsula un arreglo de enteros cuyas celdas se acceden por índice o apuntador
+
+- Instancia de variable estructura con índice para acceder al arreglo **✓**
+    
+    ```c
+    #include <stdio.h>
+    
+    struct Datos
+    {
+        int numeros[5];
+        int i;
+    
+    };
+    
+    int main (){
+        struct Datos dato;
+        for(dato.i=0; dato.i<5; dato.i=dato.i+1){
+            printf("Ingresa el dato numero %d: ", dato.i+1);
+            scanf("%d",&dato.numeros[dato.i]);
+        }
+    
+        for(dato.i=0; dato.i<5; dato.i++){
+            printf("\nEn la celda #%d esta el dato %d con la direccion %lu", dato.i, dato.numeros[dato.i], &dato.numeros[dato.i]);
+        }
+    
+        return 0;
+    }
+    ```
+    
+- Instancia de variable estructura con apuntador para acceder al arreglo **✓**
+    
+    ```c
+    #include <stdio.h>
+    
+    struct Datos
+    {
+        int numeros[5];
+        int *ptr;
+    
+    };
+    
+    int main (){
+        struct Datos dato;
+        for(dato.ptr=dato.numeros; dato.ptr<&dato.numeros[5]; dato.ptr++){
+            printf("Ingresa el dato numero %d: ", (int)(dato.ptr-dato.numeros)+1);
+            scanf("%d",dato.ptr);
+        }
+    
+        for(dato.ptr=dato.numeros; dato.ptr<&dato.numeros[5]; dato.ptr++){
+            printf("\nEn la celda #%d esta el dato %d con la direccion %lu", (int)(dato.ptr-dato.numeros), *dato.ptr, dato.ptr);
+        }
+    
+        return 0;
+    }
+    ```
+    
+- Apuntador a variable estructura y con índice para acceder al arreglo **✓**
+    
+    ```c
+    #include <stdio.h>
+    
+    struct Datos
+    {
+        int numeros[5];
+        int i;
+    
+    };
+    
+    int main (){
+        struct Datos dato, *ptrd;
+        ptrd=&dato;
+        for(ptrd->i=0; ptrd->i<5; ptrd->i++){
+            printf("Ingresa el dato numero %d: ", ptrd->i+1);
+            scanf("%d",&ptrd->numeros[ptrd->i]);
+        }
+    
+        for(ptrd->i=0; ptrd->i<5; ptrd->i++){
+            printf("\nEn la celda #%d esta el dato %d con la direccion %lu", ptrd->i+1, ptrd->numeros[ptrd->i], &ptrd->numeros[ptrd->i]);
+        }
+    
+        return 0;
+    }
+    ```
+    
+- Apuntador a variable estructura y con apuntador para acceder al arreglo **✓**
+    
+    ```c
+    #include <stdio.h>
+    
+    struct Datos
+    {
+        int numeros[5];
+        int *ptr;
+    
+    };
+    
+    int main (){
+        struct Datos dato, *ptrd;
+        ptrd=&dato;
+        for(ptrd->ptr=ptrd->numeros; ptrd->ptr<&ptrd->numeros[5]; ptrd->ptr++){
+            printf("Ingresa el dato numero %d: ", (int)(ptrd->ptr-ptrd->numeros)+1);
+            scanf("%d",ptrd->ptr);
+        }
+    
+        for(ptrd->ptr=ptrd->numeros; ptrd->ptr<&ptrd->numeros[5]; ptrd->ptr++){
+            printf("\nEn la celda #%d esta el dato %d con la direccion %lu", (int)(ptrd->ptr-ptrd->numeros), *ptrd->ptr, ptrd->ptr);
+        }
+    
+        return 0;
+    }
+    ```
+    
+
+### Grupo 4
+
+Programas de repaso. Ingreso de datos desde el teclado y salida a pantalla Estructura que encapsula un arreglo de Estructuras cuyas celdas se acceden por índice o apuntador
+
+- Instancia de variable estructura y con índice para acceder al arreglo **✓**
+    
+    ```c
+    #include <stdio.h>
+    #define TAM 5
+    
+    struct Domicilio {
+        char calle[30];
+        int num;
+        char colonia[30];
+    };
+    
+    struct Persona {
+        char nombre[30];
+        int edad;
+        float estatura;
+        char sexo;
+        struct Domicilio domicilio;
+    };
+    
+    struct datos {
+        struct Persona arreglo[TAM];
+        int i;
+    };
+    
+    int main() {
+        struct datos var;
+    
+        for (var.i = 0; var.i < TAM; var.i++) {
+            printf("\nIngresa el nombre: ");
+            fflush(stdin);
+            gets(var.arreglo[var.i].nombre);
+    
+            printf("Ingresa la edad: ");
+            scanf("%d", &var.arreglo[var.i].edad);
+            fflush(stdin);
+    
+            printf("Ingresa la estatura: ");
+            scanf("%f", &var.arreglo[var.i].estatura);
+            fflush(stdin);
+    
+            printf("Ingresa el sexo: ");
+            scanf("%c", &var.arreglo[var.i].sexo); 
+            fflush(stdin);
+    
+            printf("Ingresa la calle: ");
+            fflush(stdin);
+            gets(var.arreglo[var.i].domicilio.calle);
+    
+            printf("Ingresa el número: ");
+            scanf("%d", &var.arreglo[var.i].domicilio.num);
+            fflush(stdin);
+    
+            printf("Ingresa la colonia: ");
+            fflush(stdin);
+            gets(var.arreglo[var.i].domicilio.colonia);
+        }
+    
+        printf("\nTamaño de struct datos: %d\n", (int)sizeof(struct datos));
+    
+        for (var.i = 0; var.i < TAM; var.i++) {
+            printf("\nCelda %d:", var.i);
+            printf("\nNombre: %s | Dirección: %p", var.arreglo[var.i].nombre, (void*)&var.arreglo[var.i].nombre);
+            printf("\nEdad: %d | Dirección: %p", var.arreglo[var.i].edad, (void*)&var.arreglo[var.i].edad);
+            printf("\nEstatura: %.2f | Dirección: %p", var.arreglo[var.i].estatura, (void*)&var.arreglo[var.i].estatura);
+            printf("\nSexo: %c | Dirección: %p", var.arreglo[var.i].sexo, (void*)&var.arreglo[var.i].sexo);
+            printf("\nCalle: %s | Dirección: %p", var.arreglo[var.i].domicilio.calle, (void*)&var.arreglo[var.i].domicilio.calle);
+            printf("\nNúmero: %d | Dirección: %p", var.arreglo[var.i].domicilio.num, (void*)&var.arreglo[var.i].domicilio.num);
+            printf("\nColonia: %s | Dirección: %p\n", var.arreglo[var.i].domicilio.colonia, (void*)&var.arreglo[var.i].domicilio.colonia);
+        }
+    
+        return 0;
+    }
+    
+    ```
+    
+- Instancia de variable estructura y con apuntador para acceder al arreglo **✓**
+    
+    ```c
+    #include<stdio.h>
+    #define TAM 5
+    struct Domicilio{
+        char calle[30];
+        int num;
+        char colonia[30];
+    };
+    struct Persona{
+        char nombre[30];
+        int edad;
+        float est;
+        char sexo;
+        struct Domicilio dom;
+    };
+    struct Datos{
+        struct Persona arreglo[TAM];
+        struct Persona *ptr;
+    };
+    int main(){
+        struct Datos var;
+        for(var.ptr=var.arreglo; var.ptr<&var.arreglo[TAM]; var.ptr++){
+            fflush(stdin);
+            printf("Nombre: \n");
+            gets(var.ptr->nombre);
+            fflush(stdin);
+            printf("Edad: \n");
+            scanf("%d",&var.ptr->edad);
+            fflush(stdin);
+            printf("Estatura: \n");
+            scanf("%f",&var.ptr->est);
+            fflush(stdin);
+            printf("Sexo: \n");
+            scanf("%c",&var.ptr->sexo);
+            fflush(stdin);
+            printf("Calle: \n");
+            gets(var.ptr->dom.calle);
+            fflush(stdin);
+            printf("Numero: \n");
+            scanf("%d",&var.ptr->dom.num);
+            fflush(stdin);
+            printf("Colonia: \n");
+            gets(var.ptr->dom.colonia);
+            fflush(stdin);
+        }
+        for(var.ptr=var.arreglo; var.ptr<&var.arreglo[TAM]; var.ptr++){
+            printf("En la celda %d la cadena nombre: %s en la direccion %lu\n", (int)(var.ptr - var.arreglo), var.ptr->nombre, &var.ptr->nombre);
+            printf("En la celda %d la edad: %d en la direccion %lu\n", (int)(var.ptr - var.arreglo), var.ptr->edad, &var.ptr->edad);
+            printf("En la celda %d la estatura: %.2f en la direccion %lu\n", (int)(var.ptr - var.arreglo), var.ptr->est, &var.ptr->est);
+            printf("En la celda %d el sexo: %c en la direccion %lu\n", (int)(var.ptr - var.arreglo), var.ptr->sexo, &var.ptr->sexo);
+        }
+        
+        return 0;
+    }
+    ```
+    
+- Apuntador a variable estructura y con índice para acceder al arreglo **✓**
+    
+    ```c
+    #include <stdio.h>
+    #define tam 5
+    
+    struct Domicilio {
+        char calle[30];
+        int num;
+        char colonia[30];
+    };
+    
+    struct Persona {
+        char nombre[30];
+        int edad;
+        float est;
+        char sexo;
+        struct Domicilio dom;
+    };
+    
+    struct Datos {
+        struct Persona arreglo[tam];
+        int i;
+    };
+    
+    int main() {
+        struct Datos var, *pt = &var;
+    
+        for(pt->i = 0; pt->i < tam; pt->i = pt->i + 1) {
+            fflush(stdin);
+            printf("Nombre:\n");
+            gets(pt->arreglo[pt->i].nombre);
+            fflush(stdin);
+            printf("Edad:\n");
+            scanf("%d", &pt->arreglo[pt->i].edad);
+            fflush(stdin);
+            printf("Estatura:\n");
+            scanf("%f", &pt->arreglo[pt->i].est);
+            fflush(stdin);
+            printf("Sexo:\n");
+            scanf(" %c", &pt->arreglo[pt->i].sexo);
+            fflush(stdin);
+            printf("Calle:\n");
+            gets(pt->arreglo[pt->i].dom.calle);
+            fflush(stdin);
+            printf("Numero:\n");
+            scanf("%d", &pt->arreglo[pt->i].dom.num);
+            fflush(stdin);
+            printf("Colonia:\n");
+            gets(pt->arreglo[pt->i].dom.colonia);
+            fflush(stdin);
+        }
+    
+        for(pt->i = 0; pt->i < tam; pt->i = pt->i + 1) {
+            printf("En la celda %d la cadena %s en la direccion %lu\n", pt->i, pt->arreglo[pt->i].nombre, pt->arreglo[pt->i].nombre);
+            printf("En la celda %d la edad %d en la direccion %lu\n", pt->i, pt->arreglo[pt->i].edad, &pt->arreglo[pt->i].edad);
+            printf("En la celda %d la estatura %.2f en la direccion %lu\n", pt->i, pt->arreglo[pt->i].est, &pt->arreglo[pt->i].est);
+            printf("En la celda %d el sexo %c en la direccion %lu\n", pt->i, pt->arreglo[pt->i].sexo, &pt->arreglo[pt->i].sexo);
+            printf("En la celda %d la calle %s en la direccion %lu\n", pt->i, pt->arreglo[pt->i].dom.calle, pt->arreglo[pt->i].dom.calle);
+            printf("En la celda %d el numero %d en la direccion %lu\n", pt->i, pt->arreglo[pt->i].dom.num, &pt->arreglo[pt->i].dom.num);
+            printf("En la celda %d la colonia %s en la direccion %lu\n", pt->i, pt->arreglo[pt->i].dom.colonia, pt->arreglo[pt->i].dom.colonia);
+        }
+    
+        return 0;
+    }
+    
+    ```
+    
+- Apuntador a variable estructura y con apuntador para acceder al arreglo **✓**
+    
+    ```c
+    #include <stdio.h>
+    #define tam 5
+    
+    struct Domicilio {
+        char calle[30];
+        int num;
+        char colonia[30];
+    };
+    
+    struct Persona {
+        char nombre[30];
+        int edad;
+        float est;
+        char sexo;
+        struct Domicilio dom;
+    };
+    
+    struct Datos {
+        struct Persona arreglo[tam];
+        struct Persona *pt1;
+    };
+    
+    int main() {
+        struct Datos var, *pt = &var;
+    
+        for(pt->pt1 = pt->arreglo; pt->pt1 < &pt->arreglo[tam]; pt->pt1 = pt->pt1 + 1) {
+            fflush(stdin);
+            printf("Nombre:\n");
+            gets(pt->pt1->nombre);
+            fflush(stdin);
+            printf("Edad:\n");
+            scanf("%d", &pt->pt1->edad);
+            fflush(stdin);
+            printf("Estatura:\n");
+            scanf("%f", &pt->pt1->est);
+            fflush(stdin);
+            printf("Sexo:\n");
+            scanf(" %c", &pt->pt1->sexo);
+            fflush(stdin);
+            printf("Calle:\n");
+            gets(pt->pt1->dom.calle);
+            fflush(stdin);
+            printf("Numero:\n");
+            scanf("%d", &pt->pt1->dom.num);
+            fflush(stdin);
+            printf("Colonia:\n");
+            gets(pt->pt1->dom.colonia);
+            fflush(stdin);
+        }
+    
+        for(pt->pt1 = pt->arreglo; pt->pt1 < &pt->arreglo[tam]; pt->pt1 = pt->pt1 + 1) {
+            printf("En la celda %d la cadena %s en la direccion %lu\n", (int)(pt->pt1 - pt->arreglo), pt->pt1->nombre, pt->pt1->nombre);
+            printf("En la celda %d la edad %d en la direccion %lu\n", (int)(pt->pt1 - pt->arreglo), pt->pt1->edad, &pt->pt1->edad);
+            printf("En la celda %d la estatura %.2f en la direccion %lu\n", (int)(pt->pt1 - pt->arreglo), pt->pt1->est, &pt->pt1->est);
+            printf("En la celda %d el sexo %c en la direccion %lu\n", (int)(pt->pt1 - pt->arreglo), pt->pt1->sexo, &pt->pt1->sexo);
+            printf("En la celda %d la calle %s en la direccion %lu\n", (int)(pt->pt1 - pt->arreglo), pt->pt1->dom.calle, pt->pt1->dom.calle);
+            printf("En la celda %d el numero %d en la direccion %lu\n", (int)(pt->pt1 - pt->arreglo), pt->pt1->dom.num, &pt->pt1->dom.num);
+            printf("En la celda %d la colonia %s en la direccion %lu\n", (int)(pt->pt1 - pt->arreglo), pt->pt1->dom.colonia, pt->pt1->dom.colonia);
+        }
+    
+        return 0;
+    }
+    
+    ```
+    
+
+### Grupo 5
+
+Estructura de datos: Pila Estática de enteros (con arreglos) que se ingresan o sacan con índice o apuntador. Uso de menú y funciones separadas de pila llena y pila vacía
+
+- Pila Estática de enteros con índice. **✓**
+    
+    ```c
+    #include <stdio.h>
+    #define TAM 5
+    
+    struct Pila
+    {
+        int arreglo[TAM];
+        int tope;
+    };
+    
+    int meterpila(struct Pila *, int);
+    int sacarpila(struct Pila *);
+    int vaciopila(struct Pila *);
+    int llenapila(struct Pila *);
+    int mostrarpila(struct Pila *);
+    int menu();
+    
+    int meterpila(struct Pila *p, int dato)
+    {
+        p->arreglo[p->tope] = dato;
+        p->tope++;
+        return 0;
+    }
+    
+    int sacarpila(struct Pila *p)
+    {
+        p->tope--;
+        return p->arreglo[p->tope];
+    }
+    
+    int vaciopila(struct Pila *p)
+    {
+        if (p->tope == 0)
+            return 1;
+        else
+            return 0;
+    }
+    
+    int llenapila(struct Pila *p)
+    {
+        if (p->tope == TAM)
+            return 1;
+        else
+            return 0;
+    }
+    
+    int mostrarpila(struct Pila *p)
+    {
+        printf("PILA: ");
+        for (int i = 0; i < p->tope; i++)
+        {
+            printf("[%d] ", p->arreglo[i]);
+        }
+        printf("\n");
+    
+        return 0;
+    }
+    
+    int menu()
+    {
+        printf("--MENU--\n");
+        printf("1. push\n");
+        printf("2. pop\n");
+        printf("3. salir\n");
+        printf("Ingresa la opcion\n");
+    
+        int op;
+        scanf("%d", &op);
+        return op;
+    }
+    
+    int main()
+    {
+        int num;
+        struct Pila pila;
+        pila.tope = 0;
+    
+        for (;;)
+        {
+            if (vaciopila(&pila) == 0)
+            {
+                mostrarpila(&pila);
+            }
+    
+            int op = menu();
+    
+            switch (op)
+            {
+            case 1:
+                if (llenapila(&pila) == 0)
+                {
+                    printf("Ingresa el numero a insertar: ");
+                    scanf("%d", &num);
+                    meterpila(&pila, num);
+                }
+                else
+                    printf("No hay espacio en la pila\n");
+                break;
+            case 2:
+                if (vaciopila(&pila) == 0)
+                {
+                    sacarpila(&pila);
+                    printf("Dato sacado\n");
+                }
+                else
+                    printf("La pila esta vacia\n");
+                break;
+            case 3:
+                printf("Saliendo del programa");
+                return 0;
+            default:
+                printf("Opcion invalida, intente de nuevo\n");
+                break;
+            }
+        }
+    
+        return 0;
+    }
+    
+    ```
+    
+- Pila de enteros con apuntador. **✓**
+    
+    ```c
+    #include <stdio.h>
+    #define TAM 5
+    
+    struct Pila
+    {
+        int arreglo[TAM];
+        int *ptr;
+    };
+    
+    int meterpila(struct Pila *, int);
+    int sacarpila(struct Pila *);
+    int vaciopila(struct Pila *);
+    int llenapila(struct Pila *);
+    int mostrarpila(struct Pila *);
+    int menu();
+    
+    int meterpila(struct Pila *p, int dato)
+    {
+        *(p->ptr) = dato;
+        p->ptr++;
+        return 0;
+    }
+    
+    int sacarpila(struct Pila *p)
+    {
+        p->ptr--;
+        return *(p->ptr);
+    }
+    
+    int vaciopila(struct Pila *p)
+    {
+        if (p->ptr == p->arreglo)
+            return 1;
+        else
+            return 0;
+    }
+    
+    int llenapila(struct Pila *p)
+    {
+        if (p->ptr == p->arreglo + TAM)
+            return 1;
+        else
+            return 0;
+    }
+    
+    int mostrarpila(struct Pila *p)
+    {
+        printf("PILA: ");
+        for (int *i = p->arreglo; i < p->ptr; i++)
+        {
+            printf("[%d] ", *i);
+        }
+        printf("\n");
+    
+        return 0;
+    }
+    
+    int menu()
+    {
+        printf("--MENU--\n");
+        printf("1. push\n");
+        printf("2. pop\n");
+        printf("3. salir\n");
+        printf("Ingresa la opcion\n");
+    
+        int op;
+        scanf("%d", &op);
+        return op;
+    }
+    
+    int main()
+    {
+        int num;
+        struct Pila pila;
+        pila.ptr = pila.arreglo;
+    
+        for (;;)
+        {
+            if (vaciopila(&pila) == 0)
+            {
+                mostrarpila(&pila);
+            }
+    
+            int op = menu();
+    
+            switch (op)
+            {
+            case 1:
+                if (llenapila(&pila) == 0)
+                {
+                    printf("Ingresa el numero a insertar: ");
+                    scanf("%d", &num);
+                    meterpila(&pila, num);
+                }
+                else
+                    printf("No hay espacio en la pila\n");
+                break;
+            case 2:
+                if (vaciopila(&pila) == 0)
+                {
+                    sacarpila(&pila);
+                    printf("Dato sacado\n");
+                }
+                else
+                    printf("La pila esta vacia\n");
+                break;
+            case 3:
+                printf("Saliendo del programa");
+                return 0;
+            default:
+                printf("Opcion invalida, intente de nuevo\n");
+                break;
+            }
+        }
+    
+        return 0;
+    }
+    
+    ```
+    
+- Pila Estática con apuntador a variable estructura y con índice para acceder al arreglo **✓**
+    
+    ```c
+    #include <stdio.h>
+    #define TAM 5
+    struct Pila
+    {
+        int arreglo[TAM];
+        int tope;
+    };
+    
+    int meterpila(struct Pila *, int);
+    int sacarpila(struct Pila *);
+    int vaciopila(struct Pila *);
+    int llenapila(struct Pila *);
+    int mostrarpila(struct Pila *);
+    int menu();
+    
+    int meterpila(struct Pila *p, int dato)
+    {
+        p->arreglo[p->tope] = dato;
+        p->tope++;
+        return 0;
+    }
+    
+    int sacarpila(struct Pila *p)
+    {
+        p->tope--;
+        return p->arreglo[p->tope];
+    }
+    
+    int vaciopila(struct Pila *p)
+    {
+        if (p->tope == 0)
+            return 1;
+        else
+            return 0;
+    }
+    
+    int llenapila(struct Pila *p)
+    {
+        if (p->tope == TAM)
+            return 1;
+        else
+            return 0;
+    }
+    
+    int mostrarpila(struct Pila *p)
+    {
+        printf("PILA: ");
+        for (int i = 0; i < p->tope; i++)
+        {
+            printf("[%d] ", p->arreglo[i]);
+        }
+        printf("\n");
+    
+        return 0;
+    }
+    
+    int menu()
+    {
+        printf("--MENU--\n");
+        printf("1. push\n");
+        printf("2. pop\n");
+        printf("3. salir\n");
+        printf("Ingresa la opcion\n");
+    
+        int op;
+        scanf("%d", &op);
+        return op;
+    }
+    
+    int main()
+    {
+        int num;
+        struct Pila pila, *miptr;
+        miptr = &pila;
+        miptr->tope = 0;
+    
+        for (;;)
+        {
+            if (vaciopila(miptr) == 0)
+            {
+                mostrarpila(miptr);
+            }
+    
+            int op = menu();
+    
+            switch (op)
+            {
+            case 1:
+                if (llenapila(miptr) == 0)
+                {
+                    printf("Ingresa el numero a insertar: ");
+                    scanf("%d", &num);
+                    meterpila(miptr, num);
+                }
+                else
+                    printf("No hay espacio en la pila\n");
+                break;
+            case 2:
+                if (vaciopila(miptr) == 0)
+                {
+                    sacarpila(miptr);
+                    printf("Dato sacado\n");
+                }
+                else
+                    printf("La pila esta vacia\n");
+                break;
+            case 3:
+                printf("Saliendo del programa");
+                return 0;
+            default:
+                printf("Opcion invalida, intente de nuevo\n");
+                break;
+            }
+        }
+    
+        return 0;
+    }
+    
+    ```
+    
+- Pila Estática con apuntador a variable estructura y con apuntador para acceder al arreglo **✓**
+    
+    ```c
+    #include <stdio.h>
+    #define TAM 5
+    
+    struct Pila
+    {
+        int arreglo[TAM];
+        int *ptr;
+    };
+    
+    int meterpila(struct Pila *, int);
+    int sacarpila(struct Pila *);
+    int vaciopila(struct Pila *);
+    int llenapila(struct Pila *);
+    int mostrarpila(struct Pila *);
+    int menu();
+    
+    int meterpila(struct Pila *p, int dato)
+    {
+        *(p->ptr) = dato;
+        p->ptr++;
+        return 0;
+    }
+    
+    int sacarpila(struct Pila *p)
+    {
+        p->ptr--;
+        return *(p->ptr);
+    }
+    
+    int vaciopila(struct Pila *p)
+    {
+        return p->ptr == p->arreglo;
+    }
+    
+    int llenapila(struct Pila *p)
+    {
+        return p->ptr == p->arreglo + TAM;
+    }
+    
+    int mostrarpila(struct Pila *p)
+    {
+        printf("PILA: ");
+        for (int *i = p->arreglo; i < p->ptr; i++)
+        {
+            printf("[%d] ", *i);
+        }
+        printf("\n");
+        return 0;
+    }
+    
+    int menu()
+    {
+        printf("--MENU--\n");
+        printf("1. push\n");
+        printf("2. pop\n");
+        printf("3. salir\n");
+        printf("Ingresa la opcion\n");
+    
+        int op;
+        scanf("%d", &op);
+        return op;
+    }
+    
+    int main()
+    {
+        int num;
+        struct Pila pila;
+        struct Pila *ptr = &pila;
+        ptr->ptr = ptr->arreglo;
+    
+        for (;;)
+        {
+            if (!vaciopila(ptr))
+            {
+                mostrarpila(ptr);
+            }
+    
+            int op = menu();
+    
+            switch (op)
+            {
+            case 1:
+                if (!llenapila(ptr))
+                {
+                    printf("Ingresa el numero a insertar: ");
+                    scanf("%d", &num);
+                    meterpila(ptr, num);
+                }
+                else
+                    printf("No hay espacio en la pila\n");
+                break;
+            case 2:
+                if (!vaciopila(ptr))
+                {
+                    sacarpila(ptr);
+                    printf("Dato sacado\n");
+                }
+                else
+                    printf("La pila esta vacia\n");
+                break;
+            case 3:
+                printf("Saliendo del programa");
+                return 0;
+            default:
+                printf("Opcion invalida, intente de nuevo\n");
+                break;
+            }
+        }
+    
+        return 0;
+    }
+    
+    ```
+    
+- Pila Estática con apuntador a variable estructura y con doble apuntador para acceder al arreglo **✓**
+    
+    ```c
+    #include <stdio.h>
+    #define TAM 5
+    
+    struct Pila
+    {
+        int arreglo[TAM];
+        int *ptr1, **ptr2;
+    };
+    
+    int meterpila(struct Pila *, int);
+    int sacarpila(struct Pila *);
+    int vacia(struct Pila *);
+    int llena(struct Pila *);
+    int mostrarpila(struct Pila *);
+    int menu();
+    
+    int meterpila(struct Pila *ptr, int dato){
+        **ptr->ptr2=dato;
+        *ptr->ptr2=*ptr->ptr2+1;
+        return 0;
+    }
+    
+    int sacarpila(struct Pila *ptr){
+        *ptr->ptr2=*ptr->ptr2-1;
+        return (**ptr->ptr2);
+    }
+    
+    int vacia(struct Pila *ptr){
+        if(*ptr->ptr2==ptr->arreglo)
+            return 1;
+        else
+            return 0;
+    }
+    
+    int llena(struct Pila *ptr){
+        if(*ptr->ptr2==&ptr->arreglo[TAM])
+            return 1;
+        else
+            return 0;
+    }
+    int mostrarpila(struct Pila *ptrs)
+    {
+        printf("PILA: ");
+        int *temp = ptrs->arreglo;
+        while (temp < *ptrs->ptr2)
+        {
+            printf("[%d] ", *temp);
+            temp++;
+        }
+        printf("\n");
+    
+        return 0;
+    }
+    int menu()
+    {
+        printf("--MENU--\n");
+        printf("1. push\n");
+        printf("2. pop\n");
+        printf("3. salir\n");
+        printf("Ingresa la opcion\n");
+    
+        int op;
+        scanf("%d", &op);
+        return op;
+    }
+    
+    int main(){
+        struct Pila pila, *miptr;
+        int dato, num;
+        miptr=&pila;
+        miptr->ptr1=miptr->arreglo;
+        miptr->ptr2=&miptr->ptr1;
+    
+        for (;;)
+        {
+            if (vacia(miptr) == 0)
+                {
+                    mostrarpila(miptr);
+                }
+            
+            int op = menu();
+    
+            switch (op)
+            {
+            case 1:
+                if (llena(miptr) == 0)
+                {
+                    printf("Ingresa el numero a insertar: ");
+                    scanf("%d", &num);
+                    meterpila(miptr, num);
+                }
+                else
+                    printf("No hay espacio en la pila\n");
+                break;
+            case 2:
+                if (vacia(miptr) == 0)
+                {
+                    sacarpila(miptr);
+                    printf("Dato sacado\n");
+                }
+                else
+                    printf("La pila esta vacia\n");
+                break;
+            case 3:
+                printf("Saliendo del programa");
+                return 0;
+                break;
+            default:
+                printf("Opcion invalida, intente de nuevo\n");
+                break;
+            }
+        }
+    
+        
+    }
+    
+    ```
+    
+- Pila Estática con doble apuntador a variable estructura y con doble apuntador para acceder al arreglo **✓**
+    
+    ```c
+    #include <stdio.h>
+    #define TAM 5
+    
+    struct Pila
+    {
+        int arreglo[TAM];
+        int *ptr1, **ptr2;
+    };
+    
+    int meterpila(struct Pila **, int);
+    int sacarpila(struct Pila **);
+    int vacia(struct Pila **);
+    int llena(struct Pila **);
+    int mostrarpila(struct Pila **);
+    int menu();
+    
+    int meterpila(struct Pila **ptr, int dato){
+        **(*ptr)->ptr2=dato;
+        *(*ptr)->ptr2=*(*ptr)->ptr2+1;
+        return 0;
+    }
+    
+    int sacarpila(struct Pila **ptr){
+        *(*ptr)->ptr2=*(*ptr)->ptr2-1;
+        return (**(*ptr)->ptr2);
+    }
+    
+    int vacia(struct Pila **ptr){
+        if(*(*ptr)->ptr2==(*ptr)->arreglo)
+            return 1;
+        else
+            return 0;
+    }
+    
+    int llena(struct Pila **ptr){
+        if(*(*ptr)->ptr2==&(*ptr)->arreglo[TAM])
+            return 1;
+        else
+            return 0;
+    }
+    int mostrarpila(struct Pila **ptrs)
+    {
+        printf("PILA: ");
+        int *temp = (*ptrs)->arreglo;
+        while (temp < *(*ptrs)->ptr2)
+        {
+            printf("[%d] ", *temp);
+            temp++;
+        }
+        printf("\n");
+    
+        return 0;
+    }
+    int menu()
+    {
+        printf("--MENU--\n");
+        printf("1. push\n");
+        printf("2. pop\n");
+        printf("3. salir\n");
+        printf("Ingresa la opcion\n");
+    
+        int op;
+        scanf("%d", &op);
+        return op;
+    }
+    
+    int main(){
+        struct Pila pila, *miptr, **miptr2;
+        int dato, num;
+        miptr=&pila;
+        miptr2=&miptr;
+        (*miptr2)->ptr1=(*miptr2)->arreglo;
+        (*miptr2)->ptr2=&(*miptr2)->ptr1;
+    
+        for (;;)
+        {
+            if (vacia(miptr2) == 0)
+                {
+                    mostrarpila(miptr2);
+                }
+            
+            int op = menu();
+    
+            switch (op)
+            {
+            case 1:
+                if (llena(miptr2) == 0)
+                {
+                    printf("Ingresa el numero a insertar: ");
+                    scanf("%d", &num);
+                    meterpila(miptr2, num);
+                }
+                else
+                    printf("No hay espacio en la pila\n");
+                break;
+            case 2:
+                if (vacia(miptr2) == 0)
+                {
+                    sacarpila(miptr2);
+                    printf("Dato sacado\n");
+                }
+                else
+                    printf("La pila esta vacia\n");
+                break;
+            case 3:
+                printf("Saliendo del programa");
+                return 0;
+                break;
+            default:
+                printf("Opcion invalida, intente de nuevo\n");
+                break;
+            }
+        }
+    
+        
+    }
+    
+    ```
+    
+
+### Grupo 6
+
+Estructura de datos: Cola Estática de enteros (con arreglos) que se ingresan o sacan con índice o apuntador. Uso de menú y funciones separadas de cola llena y cola vacía
+
+- Cola Estática de enteros con índice. **✓**
+    
+    ```c
+    #include <stdio.h>
+    #define TAM 5
+    
+    struct Cola {
+        int arreglo[TAM];
+        int frente;
+        int fin;
+    };
+    
+    int resetear(struct Cola *c) {
+        c->frente = 0;
+        c->fin = 0;
+        return 0;
+    }
+    
+    int meter(struct Cola *c, int dato) {
+        c->arreglo[c->fin] = dato;
+        c->fin++;
+        return 0;
+    }
+    
+    int sacar(struct Cola *c) {
+        int aux = c->arreglo[c->frente];
+        c->frente++;
+        return aux;
+    }
+    
+    int vacio(struct Cola *c) {
+        return c->frente == c->fin;
+    }
+    
+    int lleno(struct Cola *c) {
+        return c->fin == TAM;
+    }
+    
+    int visualizar(struct Cola *c) {
+        printf("\nCola: ");
+        for (int i = c->frente; i < c->fin; i++) {
+            printf("%d ", c->arreglo[i]);
+        }
+        printf("\n");
+        return 0;
+    }
+    
+    int menu() {
+        int op;
+        printf("----MENU---");
+        printf("\n1. Insertar");
+        printf("\n2. Sacar");
+        printf("\n3. Salir\n");
+        printf("Ingresa la opcion: ");
+        scanf("%d", &op);
+        return op;
+    }
+    
+    int main() {
+        int dato;
+        struct Cola cola;
+        resetear(&cola);
+    
+        for (;;) {
+            switch (menu()) {
+                case 1:
+                    if (lleno(&cola)) {
+                        printf("\nCOLA LLENA\n");
+                    } else {
+                        printf("Ingresa el dato a meter: ");
+                        scanf("%d", &dato);
+                        meter(&cola, dato);
+                        visualizar(&cola);
+                    }
+                    break;
+                case 2:
+                    if (vacio(&cola)) {
+                        printf("\nCOLA VACIA\n");
+                    } else {
+                        printf("DATO SACADO: %d\n", sacar(&cola));
+                        visualizar(&cola);
+                    }
+                    break;
+                default:
+                    return 0;
+            }
+        }
+    }
+    ```
+    
+- Cola Estática de enteros con apuntador. **✓**
+    
+    ```c
+    #include <stdio.h>
+    #define TAM 5
+    
+    struct Cola {
+        int arreglo[TAM];
+        int *ptrm;
+        int *ptrs;
+    };
+    
+    int resetear(struct Cola *);
+    int meter(struct Cola *, int);
+    int sacar(struct Cola *, int *);
+    int vacio(struct Cola *);
+    int lleno(struct Cola *);
+    int menu();
+    int visualizar(struct Cola *);
+    
+    int resetear(struct Cola *ptrc) {
+        ptrc->ptrm = ptrc->arreglo;
+        ptrc->ptrs = ptrc->arreglo;
+        return 0;
+    }
+    
+    int meter(struct Cola *ptrc, int dato) {
+        *ptrc->ptrm = dato;
+        ptrc->ptrm++;
+        return 0;
+    }
+    
+    int sacar(struct Cola *ptrc, int *dato) {
+        *dato = *ptrc->ptrs;
+        ptrc->ptrs++;
+        return 0;
+    }
+    
+    int vacio(struct Cola *ptrc) {
+        return ptrc->ptrm == ptrc->ptrs;
+    }
+    
+    int lleno(struct Cola *ptrc) {
+        return ptrc->ptrm == &ptrc->arreglo[TAM];
+    }
+    
+    int visualizar(struct Cola *ptrc) {
+        printf("\nCola: ");
+        for (int *p = ptrc->ptrs; p < ptrc->ptrm; p++) {
+            printf("%d ", *p);
+        }
+        printf("\n");
+        return 0;
+    }
+    
+    int menu() {
+        int op;
+        printf("----MENU---");
+        printf("\n1. Insertar");
+        printf("\n2. Sacar");
+        printf("\n3. Salir\n");
+        printf("Ingresa la opcion: ");
+        scanf("%d", &op);
+        fflush(stdin);
+        return op;
+    }
+    
+    int main() {
+        struct Cola cola;
+        int dato;
+    
+        resetear(&cola);
+    
+        while (1) {
+            switch (menu()) {
+                case 1:
+                    if (lleno(&cola))
+                        printf("\nCOLA LLENA\n");
+                    else {
+                        printf("Ingresa el dato a meter: ");
+                        scanf("%d", &dato);
+                        meter(&cola, dato);
+                        visualizar(&cola);
+                    }
+                    break;
+                case 2:
+                    if (vacio(&cola))
+                        printf("\nCOLA VACIA\n");
+                    else {
+                        sacar(&cola, &dato);
+                        printf("DATO SACADO: %d\n", dato);
+                        visualizar(&cola);
+                    }
+                    break;
+                default:
+                    return 0;
+            }
+        }
+    
+        return 0;
+    }
+    
+    ```
+    
+- Cola Estática con apuntador a variable estructura y con índice para acceder al arreglo **✓**
+    
+    ```c
+    #include <stdio.h>
+    #define TAM 5
+    
+    struct Cola {
+        int arreglo[TAM];
+        int frente;
+        int fin;
+    };
+    
+    int resetear(struct Cola *c) {
+        c->frente = 0;
+        c->fin = 0;
+        return 0;
+    }
+    
+    int meter(struct Cola *c, int dato) {
+        c->arreglo[c->fin] = dato;
+        c->fin++;
+        return 0;
+    }
+    
+    int sacar(struct Cola *c) {
+        int aux = c->arreglo[c->frente];
+        c->frente++;
+        return aux;
+    }
+    
+    int vacio(struct Cola *c) {
+        return c->frente == c->fin;
+    }
+    
+    int lleno(struct Cola *c) {
+        return c->fin == TAM;
+    }
+    
+    int visualizar(struct Cola *c) {
+        printf("\nCola: ");
+        for (int i = c->frente; i < c->fin; i++) {
+            printf("%d ", c->arreglo[i]);
+        }
+        printf("\n");
+        return 0;
+    }
+    
+    int menu() {
+        int op;
+        printf("----MENU---");
+        printf("\n1. Insertar");
+        printf("\n2. Sacar");
+        printf("\n3. Salir\n");
+        printf("Ingresa la opcion: ");
+        scanf("%d", &op);
+        return op;
+    }
+    
+    int main() {
+        int dato;
+        struct Cola cola;
+        struct Cola *pcola = &cola;  // Apuntador a cola
+    
+        resetear(pcola);
+    
+        for (;;) {
+            switch (menu()) {
+                case 1:
+                    if (lleno(pcola)) {
+                        printf("\nCOLA LLENA\n");
+                    } else {
+                        printf("Ingresa el dato a meter: ");
+                        scanf("%d", &dato);
+                        meter(pcola, dato);
+                        visualizar(pcola);
+                    }
+                    break;
+                case 2:
+                    if (vacio(pcola)) {
+                        printf("\nCOLA VACIA\n");
+                    } else {
+                        printf("DATO SACADO: %d\n", sacar(pcola));
+                        visualizar(pcola);
+                    }
+                    break;
+                default:
+                    return 0;
+            }
+        }
+    }
+    
+    ```
+    
+- Cola Estática con apuntador a variable estructura y con apuntador para acceder al arreglo **✓**
+    
+    ```c
+    #include <stdio.h>
+    #define TAM 5
+    
+    struct Cola
+    {
+        int arreglo[TAM];
+        int *ptrm;
+        int *ptrs;
+    };
+    
+    int resetear(struct Cola *);
+    int meter(struct Cola *, int);
+    int sacar(struct Cola *);
+    int vacio(struct Cola *);
+    int lleno(struct Cola *);
+    int menu();
+    int visualizar(struct Cola *);
+    
+    int resetear(struct Cola *ptrc)
+    {
+        ptrc->ptrm = ptrc->arreglo;
+        ptrc->ptrs = ptrc->arreglo;
+    
+        return 0;
+    }
+    
+    int meter(struct Cola *ptrc, int dato)
+    {
+        *ptrc->ptrm = dato;
+        ptrc->ptrm++;
+        return 0;
+    }
+    
+    int sacar(struct Cola *ptrc)
+    {
+        int aux;
+        aux = *ptrc->ptrs;
+        ptrc->ptrs++;
+        return aux;
+    }
+    
+    int vacio(struct Cola *ptrc)
+    {
+        if (ptrc->ptrm == ptrc->ptrs)
+            return 1;
+        else
+            return 0;
+    }
+    
+    int lleno(struct Cola *ptrc)
+    {
+        if (ptrc->ptrm == &ptrc->arreglo[TAM])
+            return 1;
+        else
+            return 0;
+    }
+    
+    int visualizar(struct Cola *ptrc){
+        printf("\nCola: ");
+        for (int *ptr = ptrc->ptrs; ptr < ptrc->ptrm; ptr++)
+        {
+            printf("%d ", *ptr);
+        }
+        printf("\n");
+        return 0;
+    }
+    
+    int menu()
+    {
+        int op;
+        printf("----MENU---");
+        printf("\n1. Insertar");
+        printf("\n2. Sacar");
+        printf("\n3. Salir\n");
+        printf("Ingresa la opcion: ");
+        scanf("%d", &op);
+        fflush(stdin);
+        return op;
+    }
+    
+    int main()
+    {
+    
+        int dato;
+        struct Cola cola, *miptrc;
+    
+        miptrc = &cola;
+        resetear(miptrc);
+        for (;;)
+        {
+            switch (menu())
+            {
+            case 1:
+                if (lleno(miptrc))
+                    printf("\nCOLA LLENA\n");
+                else
+                {
+                    printf("Ingresa el dato a meter: ");
+                    scanf("%d", &dato);
+                    fflush(stdin);
+                    meter(miptrc, dato);
+                    visualizar(miptrc);
+                }
+                break;
+            
+            case 2: 
+                if(vacio(miptrc))
+                    printf("\nCOLA VACIA\n");
+                else{
+                    printf("DATO SACADO: %d", sacar(miptrc));
+                    visualizar(miptrc);
+                }
+                break;
+            default:
+                return 0;
+                break;
+            }
+        }
+        return 0;
+    }
+    ```
+    
+- Cola Estática con apuntador a variable estructura y con doble apuntador para acceder al arreglo **✓**
+    
+    ```c
+    #include <stdio.h>
+    #define TAM 5
+    
+    struct Cola
+    {
+        int arreglo[TAM];
+        int *ptrm, **ptrm2;
+        int *ptrs, **ptrs2;
+    };
+    
+    int resetear(struct Cola *);
+    int meter(struct Cola *, int);
+    int sacar(struct Cola *);
+    int vacio(struct Cola *);
+    int lleno(struct Cola *);
+    int menu();
+    int visualizar(struct Cola *);
+    
+    int resetear(struct Cola *ptrc)
+    {
+        ptrc->ptrm = ptrc->arreglo;
+        ptrc->ptrm2=&ptrc->ptrm;
+        ptrc->ptrs = ptrc->arreglo;
+        ptrc->ptrs2=&ptrc->ptrs;
+    
+        return 0;
+    }
+    
+    int meter(struct Cola *ptrc, int dato)
+    {
+        **ptrc->ptrm2 = dato;
+        (*ptrc->ptrm2)++;
+        return 0;
+    }
+    
+    int sacar(struct Cola *ptrc)
+    {
+        int aux;
+        aux = **ptrc->ptrs2;
+        (*ptrc->ptrs2)++;
+        return aux;
+    }
+    
+    int vacio(struct Cola *ptrc)
+    {
+        if (*ptrc->ptrm2 == *ptrc->ptrs2)
+            return 1;
+        else
+            return 0;
+    }
+    
+    int lleno(struct Cola *ptrc)
+    {
+        if (*ptrc->ptrm2 == &ptrc->arreglo[TAM])
+            return 1;
+        else
+            return 0;
+    }
+    
+    int visualizar(struct Cola *ptrc){
+        printf("\nCola: ");
+        for (int *ptr = *ptrc->ptrs2; ptr < *ptrc->ptrm2; ptr++)
+        {
+            printf("%d ", *ptr);
+        }
+        printf("\n");
+        return 0;
+    }
+    
+    int menu()
+    {
+        int op;
+        printf("----MENU---");
+        printf("\n1. Insertar");
+        printf("\n2. Sacar");
+        printf("\n3. Salir\n");
+        printf("Ingresa la opcion: ");
+        scanf("%d", &op);
+        fflush(stdin);
+        return op;
+    }
+    
+    int main()
+    {
+    
+        int dato;
+        struct Cola cola, *miptrc;
+    
+        miptrc = &cola;
+        resetear(miptrc);
+        for (;;)
+        {
+            switch (menu())
+            {
+            case 1:
+                if (lleno(miptrc))
+                    printf("\nCOLA LLENA\n");
+                else
+                {
+                    printf("Ingresa el dato a meter: ");
+                    scanf("%d", &dato);
+                    fflush(stdin);
+                    meter(miptrc, dato);
+                    visualizar(miptrc);
+                }
+                break;
+            
+            case 2: 
+                if(vacio(miptrc))
+                    printf("\nCOLA VACIA\n");
+                else{
+                    printf("DATO SACADO: %d", sacar(miptrc));
+                    visualizar(miptrc);
+                }
+                break;
+            default:
+                return 0;
+                break;
+            }
+        }
+        return 0;
+    }
+    ```
+    
+- Cola Estática con doble apuntador a variable estructura y con doble apuntador para acceder al arreglo **✓**
+    
+    ```c
+    #include <stdio.h>
+    #define TAM 5
+    
+    struct Cola
+    {
+        int arreglo[TAM];
+        int *ptrm, **ptrm2;
+        int *ptrs, **ptrs2;
+    };
+    
+    int resetear(struct Cola *);
+    int meter(struct Cola *, int);
+    int sacar(struct Cola *);
+    int vacio(struct Cola *);
+    int lleno(struct Cola *);
+    int menu();
+    int visualizar(struct Cola *);
+    
+    int resetear(struct Cola *ptrc)
+    {
+        ptrc->ptrm = ptrc->arreglo;
+        ptrc->ptrm2 = &ptrc->ptrm;
+        ptrc->ptrs = ptrc->arreglo;
+        ptrc->ptrs2 = &ptrc->ptrs;
+        return 0;
+    }
+    
+    int meter(struct Cola *ptrc, int dato)
+    {
+        **ptrc->ptrm2 = dato;
+        (*ptrc->ptrm2)++;
+        return 0;
+    }
+    
+    int sacar(struct Cola *ptrc)
+    {
+        int aux;
+        aux = **ptrc->ptrs2;
+        (*ptrc->ptrs2)++;
+        return aux;
+    }
+    
+    int vacio(struct Cola *ptrc)
+    {
+        return *ptrc->ptrm2 == *ptrc->ptrs2;
+    }
+    
+    int lleno(struct Cola *ptrc)
+    {
+        return *ptrc->ptrm2 == &ptrc->arreglo[TAM];
+    }
+    
+    int visualizar(struct Cola *ptrc)
+    {
+        printf("\nCola: ");
+        for (int *ptr = *ptrc->ptrs2; ptr < *ptrc->ptrm2; ptr++)
+            printf("%d ", *ptr);
+        printf("\n");
+        return 0;
+    }
+    
+    int menu()
+    {
+        int op;
+        printf("----MENU---");
+        printf("\n1. Insertar");
+        printf("\n2. Sacar");
+        printf("\n3. Salir\n");
+        printf("Ingresa la opcion: ");
+        scanf("%d", &op);
+        fflush(stdin);
+        return op;
+    }
+    
+    int main()
+    {
+        int dato;
+        struct Cola cola;
+        struct Cola *ptr = &cola;
+        struct Cola **miptrc = &ptr;
+    
+        resetear(*miptrc);
+    
+        for (;;)
+        {
+            switch (menu())
+            {
+            case 1:
+                if (lleno(*miptrc))
+                    printf("\nCOLA LLENA\n");
+                else
+                {
+                    printf("Ingresa el dato a meter: ");
+                    scanf("%d", &dato);
+                    fflush(stdin);
+                    meter(*miptrc, dato);
+                    visualizar(*miptrc);
+                }
+                break;
+    
+            case 2:
+                if (vacio(*miptrc))
+                    printf("\nCOLA VACIA\n");
+                else
+                {
+                    printf("DATO SACADO: %d\n", sacar(*miptrc));
+                    visualizar(*miptrc);
+                }
+                break;
+    
+            default:
+                return 0;
+            }
+        }
+    
+        return 0;
+    }
+    
+    ```
+    
+
+### Grupo 7
+
+Estructura de datos: Cola Circular Estática (con arreglos) que se ingresan o sacan con índice o apuntador. Uso de menú
+
+- Cola Circular Estática de enteros con índice. **✓**
+    
+    ```c
+    #include <stdio.h>
+    #define TAM 5
+    
+    struct Cola {
+        int arreglo[TAM];
+        int frente;
+        int fin;
+        int contador;
+    };
+    
+    int resetear(struct Cola *c) {
+        c->frente = 0;
+        c->fin = 0;
+        c->contador = 0;
+        return 0;
+    }
+    
+    int meter(struct Cola *c, int dato) {
+        c->arreglo[c->fin] = dato;
+        c->fin = (c->fin + 1) % TAM;
+        c->contador++;
+        return 0;
+    }
+    
+    int sacar(struct Cola *c) {
+        int aux = c->arreglo[c->frente];
+        c->frente = (c->frente + 1) % TAM;
+        c->contador--;
+        return aux;
+    }
+    
+    int vacio(struct Cola *c) {
+        return c->contador == 0;
+    }
+    
+    int lleno(struct Cola *c) {
+        return c->contador == TAM;
+    }
+    
+    int visualizar(struct Cola *c) {
+        printf("\nCola: ");
+        for (int i = 0; i < c->contador; i++) {
+            int indice = (c->frente + i) % TAM;
+            printf("%d ", c->arreglo[indice]);
+        }
+        printf("\n");
+        return 0;
+    }
+    
+    int menu() {
+        int op;
+        printf("----MENU---");
+        printf("\n1. Insertar");
+        printf("\n2. Sacar");
+        printf("\n3. Salir\n");
+        printf("Ingresa la opcion: ");
+        scanf("%d", &op);
+        return op;
+    }
+    
+    int main() {
+        int dato;
+        struct Cola cola;
+        resetear(&cola);
+    
+        for (;;) {
+            switch (menu()) {
+                case 1:
+                    if (lleno(&cola)) {
+                        printf("\nCOLA LLENA\n");
+                    } else {
+                        printf("Ingresa el dato a meter: ");
+                        scanf("%d", &dato);
+                        meter(&cola, dato);
+                        visualizar(&cola);
+                    }
+                    break;
+                case 2:
+                    if (vacio(&cola)) {
+                        printf("\nCOLA VACIA\n");
+                    } else {
+                        printf("DATO SACADO: %d\n", sacar(&cola));
+                        visualizar(&cola);
+                    }
+                    break;
+                default:
+                    return 0;
+            }
+        }
+    }
+    
+    ```
+    
+- Cola Circular Estática de enteros con apuntador. **✓**
+    
+    ```c
+    #include <stdio.h>
+    #define TAM 5
+    
+    struct Cola {
+        int arreglo[TAM];
+        int *ptrm;
+        int *ptrs;
+        int contador;
+    };
+    
+    int resetear(struct Cola *);
+    int meter(struct Cola *, int);
+    int sacar(struct Cola *, int *);
+    int vacio(struct Cola *);
+    int lleno(struct Cola *);
+    int menu();
+    int visualizar(struct Cola *);
+    
+    int resetear(struct Cola *ptrc) {
+        ptrc->ptrm = ptrc->arreglo;
+        ptrc->ptrs = ptrc->arreglo;
+        ptrc->contador = 0;
+        return 0;
+    }
+    
+    int meter(struct Cola *ptrc, int dato) {
+        *ptrc->ptrm = dato;
+        ptrc->ptrm++;
+        ptrc->contador++;
+    
+        if (ptrc->ptrm == ptrc->arreglo + TAM)
+            ptrc->ptrm = ptrc->arreglo;
+    
+        return 0;
+    }
+    
+    int sacar(struct Cola *ptrc, int *dato) {
+        *dato = *ptrc->ptrs;
+        ptrc->ptrs++;
+        ptrc->contador--;
+    
+        if (ptrc->ptrs == ptrc->arreglo + TAM)
+            ptrc->ptrs = ptrc->arreglo;
+    
+        return 0;
+    }
+    
+    int vacio(struct Cola *ptrc) {
+        return ptrc->contador == 0;
+    }
+    
+    int lleno(struct Cola *ptrc) {
+        return ptrc->contador == TAM;
+    }
+    
+    int visualizar(struct Cola *ptrc) {
+        printf("\nCola: ");
+        int *p = ptrc->ptrs;
+        for (int i = 0; i < ptrc->contador; i++) {
+            printf("%d ", *p);
+            p++;
+            if (p == ptrc->arreglo + TAM)
+                p = ptrc->arreglo;
+        }
+        printf("\n");
+        return 0;
+    }
+    
+    int menu() {
+        int op;
+        printf("----MENU---");
+        printf("\n1. Insertar");
+        printf("\n2. Sacar");
+        printf("\n3. Salir\n");
+        printf("Ingresa la opcion: ");
+        scanf("%d", &op);
+        fflush(stdin);
+        return op;
+    }
+    
+    int main() {
+        struct Cola cola;
+        int dato;
+    
+        resetear(&cola);
+    
+        while (1) {
+            switch (menu()) {
+                case 1:
+                    if (lleno(&cola))
+                        printf("\nCOLA LLENA\n");
+                    else {
+                        printf("Ingresa el dato a meter: ");
+                        scanf("%d", &dato);
+                        meter(&cola, dato);
+                        visualizar(&cola);
+                    }
+                    break;
+                case 2:
+                    if (vacio(&cola))
+                        printf("\nCOLA VACIA\n");
+                    else {
+                        sacar(&cola, &dato);
+                        printf("DATO SACADO: %d\n", dato);
+                        visualizar(&cola);
+                    }
+                    break;
+                default:
+                    return 0;
+            }
+        }
+    
+        return 0;
+    }
+    
+    ```
+    
+- Cola Circular Estática con apuntador a variable estructura y con índice para acceder al arreglo **✓**
+    
+    ```c
+    #include <stdio.h>
+    #define TAM 5
+    
+    struct Cola {
+        int arreglo[TAM];
+        int frente;
+        int fin;
+        int contador;
+    };
+    
+    int resetear(struct Cola *c) {
+        c->frente = 0;
+        c->fin = 0;
+        c->contador = 0;
+        return 0;
+    }
+    
+    int meter(struct Cola *c, int dato) {
+        c->arreglo[c->fin] = dato;
+        c->fin = (c->fin + 1) % TAM;
+        c->contador++;
+        return 0;
+    }
+    
+    int sacar(struct Cola *c) {
+        int aux = c->arreglo[c->frente];
+        c->frente = (c->frente + 1) % TAM;
+        c->contador--;
+        return aux;
+    }
+    
+    int vacio(struct Cola *c) {
+        return c->contador == 0;
+    }
+    
+    int lleno(struct Cola *c) {
+        return c->contador == TAM;
+    }
+    
+    int visualizar(struct Cola *c) {
+        printf("\nCola: ");
+        for (int i = 0; i < c->contador; i++) {
+            int indice = (c->frente + i) % TAM;
+            printf("%d ", c->arreglo[indice]);
+        }
+        printf("\n");
+        return 0;
+    }
+    
+    int menu() {
+        int op;
+        printf("----MENU---");
+        printf("\n1. Insertar");
+        printf("\n2. Sacar");
+        printf("\n3. Salir\n");
+        printf("Ingresa la opcion: ");
+        scanf("%d", &op);
+        return op;
+    }
+    
+    int main() {
+        int dato;
+        struct Cola cola;
+        struct Cola *ptrCola = &cola;
+    
+        resetear(ptrCola);
+    
+        for (;;) {
+            switch (menu()) {
+                case 1:
+                    if (lleno(ptrCola)) {
+                        printf("\nCOLA LLENA\n");
+                    } else {
+                        printf("Ingresa el dato a meter: ");
+                        scanf("%d", &dato);
+                        meter(ptrCola, dato);
+                        visualizar(ptrCola);
+                    }
+                    break;
+                case 2:
+                    if (vacio(ptrCola)) {
+                        printf("\nCOLA VACIA\n");
+                    } else {
+                        printf("DATO SACADO: %d\n", sacar(ptrCola));
+                        visualizar(ptrCola);
+                    }
+                    break;
+                default:
+                    return 0;
+            }
+        }
+    }
+    
+    ```
+    
+- Cola Circular Estática con apuntador a variable estructura y con apuntador para acceder al arreglo. **✓**
+    
+    ```c
+    #include <stdio.h>
+    #define TAM 5
+    
+    struct Cola {
+        int arreglo[TAM];
+        int *frente;
+        int *fin;
+        int contador;
+    };
+    
+    int resetear(struct Cola *c) {
+        c->frente = c->arreglo;
+        c->fin    = c->arreglo;
+        c->contador = 0;
+        return 0;
+    }
+    
+    int meter(struct Cola *c, int dato) {
+        *c->fin = dato;
+        c->fin++;
+        if (c->fin == c->arreglo + TAM)
+            c->fin = c->arreglo;
+        c->contador++;
+        return 0;
+    }
+    
+    int sacar(struct Cola *c) {
+        int aux = *c->frente;
+        c->frente++;
+        if (c->frente == c->arreglo + TAM)
+            c->frente = c->arreglo;
+        c->contador--;
+        return aux;
+    }
+    
+    int vacio(struct Cola *c) {
+        return c->contador == 0;
+    }
+    
+    int lleno(struct Cola *c) {
+        return c->contador == TAM;
+    }
+    
+    int visualizar(struct Cola *c) {
+        printf("\nCola: ");
+        int *ptr = c->frente;
+        for (int i = 0; i < c->contador; i++) {
+            printf("%d ", *ptr);
+            ptr++;
+            if (ptr == c->arreglo + TAM)
+                ptr = c->arreglo;
+        }
+        printf("\n");
+        return 0;
+    }
+    
+    int menu() {
+        int op;
+        printf("----MENU---");
+        printf("\n1. Insertar");
+        printf("\n2. Sacar");
+        printf("\n3. Salir\n");
+        printf("Ingresa la opcion: ");
+        scanf("%d", &op);
+        return op;
+    }
+    
+    int main() {
+        int dato;
+        struct Cola cola;
+        struct Cola *c = &cola;
+    
+        resetear(c);
+    
+        for (;;) {
+            switch (menu()) {
+                case 1:
+                    if (lleno(c)) {
+                        printf("\nCOLA LLENA\n");
+                    } else {
+                        printf("Ingresa el dato a meter: ");
+                        scanf("%d", &dato);
+                        meter(c, dato);
+                        visualizar(c);
+                    }
+                    break;
+                case 2:
+                    if (vacio(c)) {
+                        printf("\nCOLA VACIA\n");
+                    } else {
+                        printf("DATO SACADO: %d\n", sacar(c));
+                        visualizar(c);
+                    }
+                    break;
+                default:
+                    return 0;
+            }
+        }
+    }
+    
+    ```
+    
+- Cola Circular Estática con apuntador a variable estructura y con doble apuntador para acceder al arreglo. **✓**
+    
+    ```c
+    #include <stdio.h>
+    #define TAM 5
+    
+    struct Cola {
+        int arreglo[TAM];
+        int *posiciones[TAM];
+        int **frente;
+        int **fin;
+        int contador;
+    };
+    
+    int resetear(struct Cola *c) {
+        for (int i = 0; i < TAM; i++)
+            c->posiciones[i] = &c->arreglo[i];
+        c->frente = &c->posiciones[0];
+        c->fin = &c->posiciones[0];
+        c->contador = 0;
+        return 0;
+    }
+    
+    int meter(struct Cola *c, int dato) {
+        **c->fin = dato;
+        c->fin++;
+        if (c->fin == c->posiciones + TAM)
+            c->fin = c->posiciones;
+        c->contador++;
+        return 0;
+    }
+    
+    int sacar(struct Cola *c) {
+        int aux = **c->frente;
+        c->frente++;
+        if (c->frente == c->posiciones + TAM)
+            c->frente = c->posiciones;
+        c->contador--;
+        return aux;
+    }
+    
+    int vacio(struct Cola *c) {
+        return c->contador == 0;
+    }
+    
+    int lleno(struct Cola *c) {
+        return c->contador == TAM;
+    }
+    
+    int visualizar(struct Cola *c) {
+        printf("\nCola: ");
+        int **ptr = c->frente;
+        for (int i = 0; i < c->contador; i++) {
+            printf("%d ", **ptr);
+            ptr++;
+            if (ptr == c->posiciones + TAM)
+                ptr = c->posiciones;
+        }
+        printf("\n");
+        return 0;
+    }
+    
+    int menu() {
+        int op;
+        printf("----MENU---");
+        printf("\n1. Insertar");
+        printf("\n2. Sacar");
+        printf("\n3. Salir\n");
+        printf("Ingresa la opcion: ");
+        scanf("%d", &op);
+        return op;
+    }
+    
+    int main() {
+        int dato;
+        struct Cola cola;
+        struct Cola *c = &cola;
+    
+        resetear(c);
+    
+        for (;;) {
+            switch (menu()) {
+                case 1:
+                    if (lleno(c)) {
+                        printf("\nCOLA LLENA\n");
+                    } else {
+                        printf("Ingresa el dato a meter: ");
+                        scanf("%d", &dato);
+                        meter(c, dato);
+                        visualizar(c);
+                    }
+                    break;
+                case 2:
+                    if (vacio(c)) {
+                        printf("\nCOLA VACIA\n");
+                    } else {
+                        printf("DATO SACADO: %d\n", sacar(c));
+                        visualizar(c);
+                    }
+                    break;
+                default:
+                    return 0;
+            }
+        }
+    }
+    
+    ```
+    
+- Cola Circular Estática con doble apuntador a variable estructura y con doble apuntador para acceder al arreglo. **✓**
+    
+    ```c
+    #include <stdio.h>
+    #define TAM 5
+    
+    struct Cola {
+        int arreglo[TAM];
+        int *posiciones[TAM];
+        int **frente;
+        int **fin;
+        int contador;
+    };
+    
+    int resetear(struct Cola **c) {
+        for (int i = 0; i < TAM; i++)
+            (*c)->posiciones[i] = &(*c)->arreglo[i];
+        (*c)->frente = &(*c)->posiciones[0];
+        (*c)->fin = &(*c)->posiciones[0];
+        (*c)->contador = 0;
+        return 0;
+    }
+    
+    int meter(struct Cola **c, int dato) {
+        **((*c)->fin) = dato;
+        (*c)->fin++;
+        if ((*c)->fin == (*c)->posiciones + TAM)
+            (*c)->fin = (*c)->posiciones;
+        (*c)->contador++;
+        return 0;
+    }
+    
+    int sacar(struct Cola **c) {
+        int aux = **((*c)->frente);
+        (*c)->frente++;
+        if ((*c)->frente == (*c)->posiciones + TAM)
+            (*c)->frente = (*c)->posiciones;
+        (*c)->contador--;
+        return aux;
+    }
+    
+    int vacio(struct Cola **c) {
+        return (*c)->contador == 0;
+    }
+    
+    int lleno(struct Cola **c) {
+        return (*c)->contador == TAM;
+    }
+    
+    int visualizar(struct Cola **c) {
+        printf("\nCola: ");
+        int **ptr = (*c)->frente;
+        for (int i = 0; i < (*c)->contador; i++) {
+            printf("%d ", **ptr);
+            ptr++;
+            if (ptr == (*c)->posiciones + TAM)
+                ptr = (*c)->posiciones;
+        }
+        printf("\n");
+        return 0;
+    }
+    
+    int menu() {
+        int op;
+        printf("----MENU---");
+        printf("\n1. Insertar");
+        printf("\n2. Sacar");
+        printf("\n3. Salir\n");
+        printf("Ingresa la opcion: ");
+        scanf("%d", &op);
+        return op;
+    }
+    
+    int main() {
+        int dato;
+        struct Cola cola;
+        struct Cola *ptr = &cola;
+        struct Cola **c = &ptr;
+    
+        resetear(c);
+    
+        for (;;) {
+            switch (menu()) {
+                case 1:
+                    if (lleno(c)) {
+                        printf("\nCOLA LLENA\n");
+                    } else {
+                        printf("Ingresa el dato a meter: ");
+                        scanf("%d", &dato);
+                        meter(c, dato);
+                        visualizar(c);
+                    }
+                    break;
+                case 2:
+                    if (vacio(c)) {
+                        printf("\nCOLA VACIA\n");
+                    } else {
+                        printf("DATO SACADO: %d\n", sacar(c));
+                        visualizar(c);
+                    }
+                    break;
+                default:
+                    return 0;
+            }
+        }
+    }
+    
+    ```
+    
+
+# Segundo Parcial
+
+### Grupo 1
+
+- Programas de repaso a la memoria dinámica y estructuras auto-referenciadas. **✓**
+    
+    ```c
+    struct nodo{
+    	int dato;
+    	struct nodo *ptr; //un puntero es enlance simple, dos punteros es enlace doble
+    };
+    
+    int main(){
+    	struct nodo *referencia, *ptrnew, *ptrrec, *ptrbas;
+    	
+    	return 0;
+    }
+    ```
+    
+    ```c
+    #include <stdio.h>
+    #include <stdlib.h>
+    
+    struct Nodo {
+        int clave;
+        struct Nodo* siguiente;
+    };
+    
+    // Función para verificar duplicados
+    int existeClave(struct Nodo* inicio, int clave) {
+        struct Nodo* actual = inicio;
+        while (actual != NULL) {
+            if (actual->clave == clave) return 1;
+            actual = actual->siguiente;
+        }
+        return 0;  // Cambiar a 0 cuando no encuentra la clave
+    }
+    
+    // Función para imprimir la lista
+    void imprimirLista(struct Nodo* inicio) {
+        struct Nodo* actual = inicio;
+        printf("Lista: ");
+        while (actual != NULL) {
+            printf("%d -> ", actual->clave);
+            actual = actual->siguiente;
+        }
+        printf("NULL\n");
+    }
+    
+    // Función de inserción implementando los 4 casos
+    int insertar(struct Nodo** ptrref, int valor) {
+        // Verificar duplicados
+        if (existeClave(*ptrref, valor)) {
+            printf("Error: La clave %d ya existe\n", valor);
+            return 1;
+        }
+    
+        struct Nodo* ptrN = (struct Nodo*)malloc(sizeof(struct Nodo));
+        ptrN->clave = valor;
+        ptrN->siguiente = NULL;
+    
+        // Si la lista está completamente vacía
+        if (*ptrref == NULL) {
+            *ptrref = ptrN;
+            return 1;
+        }
+    
+        // Caso 1: Si está vacío el siguiente
+        if ((*ptrref)->siguiente == NULL) {
+            // Si el nuevo valor es menor que el actual
+            if (valor < (*ptrref)->clave) {
+                ptrN->siguiente = *ptrref;
+                *ptrref = ptrN;
+            } else {
+                (*ptrref)->siguiente = ptrN;
+            }
+            return 1;
+        }
+    
+        // Caso 2: Si el nuevo es menor que el primer nodo
+        if (valor < (*ptrref)->clave) {
+            ptrN->siguiente = *ptrref;
+            *ptrref = ptrN;
+            return 1;
+        }
+    
+        // Caso 3: Recorrer con dos punteros
+        struct Nodo* ptrretaguardia = *ptrref;
+        struct Nodo* ptravanzada = (*ptrref)->siguiente;
+    
+        while (ptravanzada != NULL) {
+            if (ptrN->clave > ptrretaguardia->clave && 
+                ptrN->clave < ptravanzada->clave) {
+                ptrN->siguiente = ptravanzada;
+                ptrretaguardia->siguiente = ptrN;
+                return 1;
+            }
+            ptrretaguardia = ptravanzada;
+            ptravanzada = ptravanzada->siguiente;
+        }
+    
+        // Caso 4: Por default al final
+        ptrretaguardia->siguiente = ptrN;
+        return 1;
+    }
+    
+    int main() {
+        struct Nodo* lista = NULL;  // Iniciamos con lista vacía
+        int opcion, valor;
+    
+        do {
+            printf("\n1. Insertar valor\n");
+            printf("2. Mostrar lista\n");
+            printf("3. Salir\n");
+            printf("Elija una opción: ");
+            scanf("%d", &opcion);
+    
+            switch (opcion) {
+                case 1:
+                    printf("Ingrese valor a insertar: ");
+                    scanf("%d", &valor);
+                    insertar(&lista, valor);
+                    break;
+                case 2:
+                    imprimirLista(lista);
+                    break;
+                case 3:
+                    printf("Programa terminado\n");
+                    break;
+                default:
+                    printf("Opción inválida\n");
+            }
+        } while (opcion != 3);
+    
+        return 0;
+    }
+    
+    ```
+    
+
+### Grupo 2
+
+Estructura de datos: Pila Dinámica (con malloc). Uso de menú y funciones separadas de meter en pila, pila llena, sacar de pila y pila vacía.
+
+- Pila Dinámica de enteros programado solo en main.
+- Pila Dinámica de enteros con nodo de cabecera (apuntador simple), con enlace simple entre nodos.
+- Pila Dinámica de enteros sin nodo de cabecera (doble apuntador), con enlace simple entre nodos.
+- Pila Dinámica de enteros sin nodo de cabecera (triple apuntador), con enlace simple entre nodos.
+- Pila Dinámica de dato compuesto (estructura dato con cadena, entero y carácter) con nodo de cabecera (apuntador simple), con enlace simple entre nodos.
+- Pila Dinámica de dato compuesto (estructura dato con cadena, entero y carácter) sin nodo de cabecera (apuntador doble), con enlace simple entre nodos.
+- Pila Dinámica de dato compuesto (estructura dato con cadena, entero y carácter) sin nodo de cabecera (apuntador triple), con enlace simple entre nodos.
+
+### Grupo 3
+
+Estructura de datos: Cola Dinámica (con malloc). Uso de menú y funciones separadas de crear nodo, meter dato, sacar dato y cola vacía.
+
+- Cola Dinámica de enteros programado solo en main.
+- Cola Dinámica de enteros con nodo de cabecera, con enlace simple entre nodos.
+- Cola Dinámica de enteros sin nodo de cabecera (doble apuntador), con enlace simple entre nodos.
+- Cola Dinámica de enteros sin nodo de cabecera (triple apuntador), con enlace simple entre nodos.
+- Cola Dinámica de dato compuesto (estructura dato con cadena, entero y carácter) con nodo de cabecera (apuntador simple), con enlace simple entre nodos.
+- Cola Dinámica de dato compuesto (estructura dato con cadena, entero y carácter) sin nodo de cabecera (apuntador doble), con enlace simple entre nodos.
+- Cola Dinámica de dato compuesto (estructura dato con cadena, entero y carácter) sin nodo de cabecera (apuntador triple), con enlace simple entre nodos.
+
+### Grupo 4
+
+Estructura de datos: Cola Dinámica (con malloc). Uso de menú y funciones separadas de crear nodo, meter dato, sacar dato y cola vacía.
+
+- Cola Dinámica de enteros con 2 nodos de cabecera (2 apuntadores de referencia), con enlace doble entre nodos.
+- Cola Dinámica de enteros sin nodo de cabecera con 2 apuntadores de referencia (doble apuntador), con enlace doble entre nodos.
+- Cola Dinámica de enteros sin nodos de cabecera con 2 apuntadores de referencia (triple apuntador), con enlace doble entre nodos.
+- Cola Dinámica de dato compuesto (estructura dato con cadena, entero y carácter) con 2 nodos de cabecera (2 apuntadores de referencia), con enlace doble entre nodos.
+- Cola Dinámica de dato compuesto (estructura dato con cadena, entero y carácter) sin nodos de cabecera con 2 apuntadores de referencia (doble apuntador), con enlace doble entre nodos.
+- Cola Dinámica de dato compuesto (estructura dato con cadena, entero y carácter) sin nodos de cabecera con 2 apuntadores de referencia (triple apuntador), con enlace doble entre nodos.
+
+### Grupo 5
+
+Estructura de datos: Cola Dinámica Circular (con malloc). Uso de menú y funciones separadas de crear nodo, meter dato, sacar dato y cola vacía.
+
+- Cola Dinámica Circular de enteros con 2 nodos de cabecera (2 apuntadores de referencia), con enlace doble entre nodos.
+- Cola Dinámica Circular de enteros sin nodos de cabecera con 2 apuntadores de referencia (doble apuntador), con enlace doble entre nodos.
+- Cola Dinámica Circular de enteros sin nodos de cabecera con 2 apuntadores de referencia (triple apuntador), con enlace doble entre nodos.
+- Cola Dinámica Circular de dato compuesto (estructura dato con cadena, entero y carácter) con 2 nodos de cabecera (2 apuntadores de referencia), con enlace doble entre nodos.
+- Cola Dinámica Circular de dato compuesto (estructura dato con cadena, entero y carácter) sin nodos de cabecera con 2 apuntadores de referencia (doble apuntador), con enlace doble entre nodos.
+- Cola Dinámica Circular de dato compuesto (estructura dato con cadena, entero y carácter) sin nodos de cabecera con 2 apuntadores de referencia (triple apuntador), con enlace doble entre nodos.
+
+### Grupo 6
+
+Estructura de datos: Lista Dinámica (con malloc). Uso de menú y funciones separadas de crear nodo, meter dato, sacar dato y cola vacía.
+
+- Lista Dinámica de enteros con 1 nodo de cabecera (2 apuntadores de referencia), con enlace doble entre nodos.
+- Lista Dinámica de enteros sin nodos de cabecera con 1 apuntador de referencia (doble apuntador), con enlace doble entre nodos.
+- Lista Dinámica de enteros sin nodos de cabecera con 1 apuntador de referencia (triple apuntador), con enlace doble entre nodos.
+- Lista Dinámica de dato compuesto (estructura dato con cadena, entero y carácter) con 2 nodos de cabecera (1 apuntadores de referencia), con enlace doble entre nodos.
+- Lista Dinámica de dato compuesto (estructura dato con cadena, entero y carácter) sin nodos de cabecera con 2 apuntadores de referencia (doble apuntador), con enlace doble entre nodos.
+- Lista Dinámica de dato compuesto (estructura dato con cadena, entero y carácter) sin nodos de cabecera con 2 apuntadores de referencia (triple apuntador), con enlace doble entre nodos.
+
+### Grupo 7
+
+Estructura de datos: Lista Dinámica Circular (con malloc). Uso de menú y funciones separadas de crear nodo, meter dato, sacar dato y cola vacía.
+
+- Lista Dinámica Circular de enteros con 2 nodos de cabecera (2 apuntadores de referencia), con enlace doble entre nodos.
+- Lista Dinámica Circular de enteros sin nodos de cabecera con 2 apuntadores de referencia (doble apuntador), con enlace doble entre nodos.
+- Lista Dinámica Circular de enteros sin nodos de cabecera con 2 apuntadores de referencia (triple apuntador), con enlace doble entre nodos.
+- Lista Dinámica Circular de dato compuesto (estructura dato con cadena, entero y carácter) con 2 nodos de cabecera (2 apuntadores de referencia), con enlace doble entre nodos.
+- Lista Dinámica Circular de dato compuesto (estructura dato con cadena, entero y carácter) sin nodos de cabecera con 2 apuntadores de referencia (doble apuntador), con enlace doble entre nodos.
+- Lista Dinámica Circular de dato compuesto (estructura dato con cadena, entero y carácter) sin nodos de cabecera con 2 apuntadores de referencia (triple apuntador), con enlace doble entre nodos.
+
+### Grupo 8
+
+Aplicaciones de las Estructura de Datos Dinámicas: Pila, Cola, Cola Circular, Lista y Lista Circular. Uso de funciones separadas de crear nodo, meter dato, sacar dato, cola vacía y propias de la aplicación.
+
+- Evaluación de expresiones en notación postfija.
+- Conversión de expresiones infijas a postfijas.
+- Simulación de procesos en un Sistema Operativo.
+- Agenda que con datos personales (nombre, apellidos, dirección, teléfono, correo electrónico, fecha de cumpleaños) con operaciones básicas (agregar, modificar y eliminar)
+- Agenda que con datos personales (nombre, apellidos, dirección, teléfono, correo electrónico, fecha de cumpleaños) con operaciones básicas (agregar, modificar y eliminar). Con archivos.
+- Polinomios (suma, resta, multiplicación)
+- 10 problemas de recursividad **✓**
+    - operaciones: Suma, Multiplicación, Potencia y Factorial **✓**
+        
+        ```c
+        // 9/05/2025
+        // operaciones con recursión
+        
+        #include <stdio.h>
+        
+        int multiplicacion(int num1, int num2);
+        int potencia(int num1, int num2);
+        int potencia_mult(int num1, int num2);
+        int suma(int num1, int num2);
+        int factorial(int num1);
+        
+        int main(){
+            printf("----programa de multiplicación y potencias por recursión----\n");
+            int opcion, num1, num2, resultado;
+            for(;;){
+                printf("1. para multiplicación.\n2. para potencias.\n3. para suma. \n4. para factorial. \n5. Para  salir.\n");
+                printf("ingrese opción: ");
+                scanf("%d", &opcion);
+                switch (opcion){
+                    // multiplicación
+                    case 1:
+                        printf("ingrese número base: ");
+                        scanf("%d", &num1);
+                        printf("ingrese cuántas veces lo quiere multiplicar: ");
+                        scanf("%d", &num2);
+                        resultado = multiplicacion(num1, num2);
+                        printf("resultado: %d\n", resultado);
+                        printf("\n");
+                        break;
+                    // potencia
+                    case 2:
+                        printf("ingrese número base: ");
+                        scanf("%d", &num1);
+                        printf("ingrese el número potencia: ");
+                        scanf("%d", &num2);
+                        resultado = potencia(num1, num2);
+                        printf("resultado usando función `potencia`: %d\n", resultado);
+                        resultado = potencia_mult(num1, num2);
+                        printf("resultado usando función `multiplicación`: %d\n", resultado);
+                        printf("\n");
+                        break;
+                    // suma
+                    case 3:
+                        printf("ingrese el primer número: ");
+                        scanf("%d", &num1);
+                        printf("ingrese el segundo número: ");
+                        scanf("%d", &num2);
+                        resultado = suma(num1, num2);
+                        printf("resultado: %d\n", resultado);
+                        printf("\n");
+                        break;
+                    // factorial
+                    case 4:
+                        printf("ingrese el número: ");
+                        scanf("%d", &num1);
+                        resultado = factorial(num1);
+                        printf("resultado: %d\n", resultado);
+                        printf("\n");
+                        break;
+                    case 5:
+                        printf("saliendo del programa...\n");
+                        return 0;
+                    default:
+                        printf("Ingresa una opción válida\n");
+                }
+            }
+        }
+        
+        int multiplicacion(int num1, int num2) {
+            if (num2 == 0 || num1 == 0) {
+                return 0;
+            }
+            return num1 + multiplicacion(num1, num2 - 1);
+        }
+        
+        int potencia(int num1, int num2){
+            if (num2==0){
+                return 1;
+            }else{
+                return num1 * potencia(num1, num2-1);
+            }
+        }
+        
+        int potencia_mult(int num1, int num2) {
+            if (num2 == 0) {
+                return 1;
+            } else {
+                int resultado = 1;
+                for (int i = 0; i < num2; i++) {
+                    resultado = multiplicacion(resultado, num1);
+                }
+                return resultado;
+            }
+        }
+        
+        int suma(int num1, int num2){
+            if (num2 == 0) {
+                return num1;
+            } else if (num1 == 0) {
+                return num2;
+            } else if (num1 == 0 && num2 == 0) {
+                return 0;    
+            }else {
+                return suma(num1 + 1, num2 - 1);
+            }
+        }
+        
+        int factorial(int num1){
+            if (num1 == 0) {
+                return 1;
+            } else {
+                return num1 * factorial(num1 - 1);
+            }
+        }
+        ```
+        
+    - Función Ackerman **✓**
+        
+        ![image.png](attachment:2f5fa0a4-0533-478c-9cb8-97b05ccbb0de:image.png)
+        
+        ```c
+        // 13/05/2025
+        #include <stdio.h>
+        
+        // Función de Ackermann recursiva
+        unsigned int ackermann(unsigned int m, unsigned int n);
+        
+        int main() {
+            unsigned int m, n;
+            printf("Ingrese el valor de m: ");
+            scanf("%u", &m);
+            printf("Ingrese el valor de n: ");
+            scanf("%u", &n);
+        
+            printf("Ackermann(%u, %u) = %u\n", m, n, ackermann(m, n));
+            return 0;
+        }
+        
+        /*
+        Solo toma valores enteros no negativos.
+        Su crecimiento es extremadamente rápido, por lo que incluso para valores pequeños
+        puede tardar mucho o causar desbordamiento de pila.
+        Definición:
+        A(0, n) = n + 1
+        A(m, 0) = A(m - 1, 1) si m > 0
+        A(m, n) = A(m - 1, A(m, n - 1)) si m > 0 y n > 0
+        */
+        unsigned int ackermann(unsigned int m, unsigned int n) {
+            if (m == 0) {
+                return n + 1;
+            } else if (n == 0) {
+                return ackermann(m - 1, 1);
+            } else {
+                return ackermann(m - 1, ackermann(m, n - 1));
+            }
+        }
+        ```
+        
+    - Máximo Común Divisor **✓**
+        
+        ```c
+        // 13/05/2025
+        // Máximo común divisor (algoritmo de Euclides)
+        
+        #include <stdio.h>
+        
+        int mcd(int a, int b);
+        int mcd_arreglo(int arr[], int numeros);
+        
+        int main() {
+            int numeros;
+            printf("¿Cuántos números quieres ingresar? ");
+            scanf("%d", &numeros);
+            if (numeros < 2) {
+                printf("Debes ingresar al menos dos números.\n");
+                return 0;
+            }
+            int arreglo[numeros];
+            for (int i = 0; i < numeros; i++) {
+                printf("Ingresa el número %d: ", i + 1);
+                scanf("%d", &arreglo[i]);
+            }
+            printf("El MCD de los números ingresados es %d\n", mcd_arreglo(arreglo, numeros));
+            return 0;
+        }
+        
+        /*
+        El algoritmo de Euclides para calcular el MCD:
+        1. si b es 0, entonces el MCD es a.
+        2. Si b no es 0, se calcula el MCD de b y el residuo de a entre b (a % b).
+        3. Este proceso se repite recursivamente hasta que b sea 0.
+        Ejemplo:
+            MCD(48, 18)
+            48 % 18 = 12 -> MCD(18, 12)
+            18 % 12 = 6  -> MCD(12, 6)
+            12 % 6 = 0   -> MCD(6, 0)
+            Resultado: 6
+        */
+        
+        int mcd(int a, int b) {
+            if (b == 0)
+                return a;
+            else
+                return mcd(b, a % b);
+        }
+        
+        // Calcula el MCD de un arreglo de números de manera recursiva
+        /*
+        1. Si hay más de dos números, se calcula el MCD del primer número con el resultado del MCD del resto del arreglo.
+        2. Este proceso se repite recursivamente hasta reducir el arreglo a dos elementos.
+        Ejemplo:
+            Para el arreglo [24, 36, 60]:
+            - Primero se calcula MCD(24, MCD(36, 60))
+            - MCD(36, 60) = 12
+            - MCD(24, 12) = 12
+            Resultado: 12
+        */
+        int mcd_arreglo(int arr[], int n) {
+            if (n == 2)
+                return mcd(arr[0], arr[1]);
+            else
+                return mcd(arr[0], mcd_arreglo(arr + 1, n - 1));
+        }
+        ```
+        
+    - Fibonacci **✓**
+        
+        ![image.png](attachment:0c7ae6f0-d134-4dc8-9351-7c62b15046b8:image.png)
+        
+        ```c
+        #include <stdio.h>
+        
+        int fibonacci(int n);
+        
+        int main() {
+            int n;
+            printf("¿Cuántos términos de la serie de Fibonacci quieres mostrar?: ");
+            scanf("%d", &n);
+        
+            printf("Serie de Fibonacci:\n");
+            for (int i = 0; i < n; i++) {
+                printf("%d ", fibonacci(i));
+            }
+            printf("\n");
+            return 0;
+        }
+        
+        // Función recursiva para calcular el n-ésimo término de Fibonacci
+        /* explicación:
+        La serie de Fibonacci es una sucesión de números en la que cada número es la suma de los dos anteriores.
+        Los dos primeros términos son 0 y 1. Es decir:
+            Fibonacci(0) = 0
+            Fibonacci(1) = 1
+            Fibonacci(n) = Fibonacci(n-1) + Fibonacci(n-2) para n > 1
+        
+        Ejemplo de los primeros términos:
+        0, 1, 1, 2, 3, 5, 8, 13, 21, 34, ...
+        */
+        int fibonacci(int n) {
+            if (n == 0)
+                return 0; // Caso base: Fibonacci(0) = 0
+            else if (n == 1)
+                return 1;  // Caso base: Fibonacci(1) = 1
+            else
+                return fibonacci(n - 1) + fibonacci(n - 2);
+        }
+        ```
+        
+    - Longitud de Cadena **✓**
+        
+        ```c
+        #include <stdio.h>
+        
+        int longitud(char *cad) {
+            if (*cad == '\0') return 0;
+            return 1 + longitud(cad + 1);
+        }
+        
+        int main() {
+            char cadena[100];
+            printf("Ingrese una cadena: ");
+            scanf("%s", cadena);
+            printf("La longitud de la cadena '%s' es: %d\n", cadena, longitud(cadena));
+            return 0;
+        }
+        
+        ```
+        
+    - Invertir Cadena **✓**
+        
+        ```c
+        #include <stdio.h>
+        
+        void invertir(char *cad) {
+            if (*cad == '\0') return;
+            invertir(cad + 1);
+            putchar(*cad);
+        }
+        
+        int main() {
+            char cadena[100];
+            printf("Ingrese una cadena: ");
+            scanf("%s", cadena);
+            printf("La cadena invertida es: ");
+            invertir(cadena);
+            printf("\n");
+            return 0;
+        }
+        
+        ```
+        
+    - Torres de Hanoi **✓**
+        
+        ![image.png](attachment:9d8781aa-0697-46a0-84ce-c382b473415d:image.png)
+        
+        ```c
+        #include <stdio.h>
+        
+        void hanoi(int n, char origen, char auxiliar, char destino);
+        
+        int main() {
+            int n;
+            printf("Ingrese el número de discos: ");
+            scanf("%d", &n);
+            printf("Los pasos para resolver las Torres de Hanoi son:\n");
+            hanoi(n, 'A', 'B', 'C');
+            return 0;
+        }
+        
+        /*
+        Mover una torre de n discos desde el poste de origen hasta el poste de destino, usando un poste auxiliar.
+        mientras mayor sea el número, mayor será el disco.
+        Reglas:
+        - Solo se puede mover un disco a la vez.
+        - Un disco más grande no puede estar encima de uno más pequeño.
+        */
+        void hanoi(int n, char origen, char auxiliar, char destino) {
+            if (n == 1) { // Si solo hay un disco, se mueve directamente del origen al destino.
+                printf("Mover disco 1 de %c a %c\n", origen, destino);
+                return;
+            }
+            hanoi(n - 1, origen, destino, auxiliar);
+            printf("Mover disco %d de %c a %c\n", n, origen, destino);
+            hanoi(n - 1, auxiliar, origen, destino);
+        }
+        ```
