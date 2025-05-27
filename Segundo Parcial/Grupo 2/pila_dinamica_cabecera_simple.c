@@ -1,57 +1,133 @@
-// Pila Dinámica de enteros con nodo de cabecera (apuntador simple), con enlace simple entre nodos.
+/*
+ * IMPLEMENTACIÓN DE PILA DINÁMICA CON CABECERA SIMPLE
+ * 
+ * Esta implementación utiliza un único puntero (struct Nodo* pila) para
+ * mantener la referencia al tope de la pila.
+ * 
+ * Características:
+ * - Usa un puntero simple como cabecera
+ * - Las funciones reciben un doble puntero (&pila) para modificar la cabecera
+ * - Implementa las operaciones básicas: apilar, desapilar, mostrar
+ * - Almacena datos simples (enteros)
+ * 
+ * Diferencia con otras implementaciones:
+ * - A diferencia de la versión de doble apuntador, aquí se pasa la dirección 
+ *   del puntero directamente en cada llamada
+ * - A diferencia de la versión triple apuntador, tiene un nivel menos de indirección
+ * - A diferencia de las versiones compuestas, solo maneja datos simples (enteros)
+ */
+#include <stdio.h>
+#include <stdlib.h>
 
-typedef struct Nodo {
+struct Nodo {
     int dato;
     struct Nodo* siguiente;
-} Nodo;
+};
 
-typedef struct {
-    Nodo* cabeza;
-} Pila;
+// Prototipos de funciones
+int apilar(struct Nodo** tope, int valor);
+int desapilar(struct Nodo** tope);
+int estaVacia(struct Nodo* tope);
+void mostrarPila(struct Nodo* tope);
+int menu();
 
-// Función para inicializar la pila
-void inicializarPila(Pila* pila) {
-    pila->cabeza = NULL;
+int main() {
+    struct Nodo* pila = NULL;
+    int valor;
+    
+    while (1) {
+        switch (menu()) {
+            case 1:
+                printf("Ingrese el valor a apilar: ");
+                scanf("%d", &valor);
+                if (apilar(&pila, valor) == 0) {
+                    printf("Valor apilado correctamente\n");
+                    mostrarPila(pila);
+                }
+                break;
+            case 2:
+                if (!estaVacia(pila)) {
+                    valor = desapilar(&pila);
+                    printf("Valor desapilado: %d\n", valor);
+                    mostrarPila(pila);
+                } else {
+                    printf("La pila está vacía\n");
+                }
+                break;
+            case 3:
+                mostrarPila(pila);
+                break;
+            case 4:
+                printf("Saliendo del programa...\n");
+                // Liberar memoria antes de salir
+                while (!estaVacia(pila)) {
+                    desapilar(&pila);
+                }
+                return 0;
+            default:
+                printf("Opción inválida\n");
+                break;
+        }
+    }
+    return 0;
+}
+
+// Definiciones de funciones
+// Función para apilar (push)
+int apilar(struct Nodo** tope, int valor) {
+    struct Nodo* nuevo = (struct Nodo*)malloc(sizeof(struct Nodo));
+    if (nuevo == NULL) {
+        printf("Error: No se pudo asignar memoria\n");
+        return -1;
+    }
+    nuevo->dato = valor;
+    nuevo->siguiente = *tope;
+    *tope = nuevo;
+    return 0;
+}
+
+// Función para desapilar (pop)
+int desapilar(struct Nodo** tope) {
+    if (*tope == NULL) {
+        printf("Error: Pila vacía\n");
+        return -1;
+    }
+    struct Nodo* temp = *tope;
+    int valor = temp->dato;
+    *tope = (*tope)->siguiente;
+    free(temp);
+    return valor;
 }
 
 // Función para verificar si la pila está vacía
-int esPilaVacia(Pila* pila) {
-    return pila->cabeza == NULL;
+int estaVacia(struct Nodo* tope) {
+    return tope == NULL;
 }
 
-// Función para apilar un elemento
-void apilar(Pila* pila, int dato) {
-    Nodo* nuevoNodo = (Nodo*)malloc(sizeof(Nodo));
-    nuevoNodo->dato = dato;
-    nuevoNodo->siguiente = pila->cabeza;
-    pila->cabeza = nuevoNodo;
-}
-
-// Función para desapilar un elemento
-int desapilar(Pila* pila) {
-    if (esPilaVacia(pila)) {
-        printf("Pila vacía. No se puede desapilar.\n");
-        return -1; // O algún otro valor que indique error
+// Función para mostrar la pila
+void mostrarPila(struct Nodo* tope) {
+    if (tope == NULL) {
+        printf("Pila vacía\n");
+        return;
     }
-    Nodo* nodoAEliminar = pila->cabeza;
-    int dato = nodoAEliminar->dato;
-    pila->cabeza = nodoAEliminar->siguiente;
-    free(nodoAEliminar);
-    return dato;
+    printf("Pila: ");
+    struct Nodo* actual = tope;
+    while (actual != NULL) {
+        printf("%d ", actual->dato);
+        actual = actual->siguiente;
+    }
+    printf("\n");
 }
 
-// Función para obtener el elemento en la cima de la pila sin desapilarlo
-int cimaPila(Pila* pila) {
-    if (esPilaVacia(pila)) {
-        printf("Pila vacía. No hay elemento en la cima.\n");
-        return -1; // O algún otro valor que indique error
-    }
-    return pila->cabeza->dato;
-}
-
-// Función para liberar la memoria de la pila
-void liberarPila(Pila* pila) {
-    while (!esPilaVacia(pila)) {
-        desapilar(pila);
-    }
+// Función del menú
+int menu() {
+    int opcion;
+    printf("\n---- MENU PILA DINAMICA ----\n");
+    printf("1. Apilar\n");
+    printf("2. Desapilar\n");
+    printf("3. Mostrar pila\n");
+    printf("4. Salir\n");
+    printf("Ingrese su opción: ");
+    scanf("%d", &opcion);
+    return opcion;
 }
