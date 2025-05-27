@@ -34,7 +34,7 @@ void inicializar_cola(Cola *cola) {
     cola->cabecera2->ant = cola->cabecera1;
 }
 
-bool cola_vacia(Cola *cola) {
+int cola_vacia(Cola *cola) {
     return cola->cabecera1->sig == cola->cabecera2;
 }
 
@@ -49,14 +49,14 @@ void meter_dato(Cola *cola, int dato) {
     cola->cabecera2->ant = nuevo;
 }
 
-bool sacar_dato(Cola *cola, int *dato) {
-    if (cola_vacia(cola)) return false;
+int sacar_dato(Cola *cola, int *dato) {
+    if (cola_vacia(cola)) return 0;
     Nodo *primero = cola->cabecera1->sig;
     *dato = primero->dato;
     cola->cabecera1->sig = primero->sig;
     primero->sig->ant = cola->cabecera1;
     free(primero);
-    return true;
+    return 1;
 }
 
 void mostrar_cola(Cola *cola) {

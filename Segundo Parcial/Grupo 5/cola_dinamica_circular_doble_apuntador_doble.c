@@ -1,7 +1,6 @@
 // Cola Dinámica Circular de enteros sin nodos de cabecera con 2 apuntadores de referencia (doble apuntador), con enlace doble entre nodos
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdbool.h>
 
 typedef struct Nodo {
     int dato;
@@ -27,7 +26,7 @@ void inicializar_cola(Cola *cola) {
     cola->frente = cola->final = NULL;
 }
 
-bool cola_vacia(Cola *cola) {
+int cola_vacia(Cola *cola) {
     return cola->frente == NULL;
 }
 
@@ -46,8 +45,8 @@ void meter_dato(Cola *cola, int dato) {
     }
 }
 
-bool sacar_dato(Cola *cola, int *dato) {
-    if (cola_vacia(cola)) return false;
+int sacar_dato(Cola *cola, int *dato) {
+    if (cola_vacia(cola)) return 0;
     Nodo *primero = cola->frente;
     *dato = primero->dato;
     if (cola->frente == cola->final) {
@@ -58,7 +57,7 @@ bool sacar_dato(Cola *cola, int *dato) {
         cola->final->sig = cola->frente;
     }
     free(primero);
-    return true;
+    return 1;
 }
 
 void mostrar_cola(Cola *cola) {

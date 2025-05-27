@@ -1,7 +1,6 @@
 // Cola Dinámica Circular de dato compuesto (estructura dato con cadena, entero y carácter) con 2 nodos de cabecera (2 apuntadores de referencia), con enlace doble entre nodos
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdbool.h>
 #include <string.h>
 
 typedef struct {
@@ -39,7 +38,7 @@ void inicializar_cola(Cola *cola) {
     cola->cabecera2->ant = cola->cabecera1;
 }
 
-bool cola_vacia(Cola *cola) {
+int cola_vacia(Cola *cola) {
     return cola->cabecera1->sig == cola->cabecera2;
 }
 
@@ -53,14 +52,14 @@ void meter_dato(Cola *cola, Dato dato) {
     cola->cabecera2->ant = nuevo;
 }
 
-bool sacar_dato(Cola *cola, Dato *dato) {
-    if (cola_vacia(cola)) return false;
+int sacar_dato(Cola *cola, Dato *dato) {
+    if (cola_vacia(cola)) return 0;
     Nodo *primero = cola->cabecera1->sig;
     *dato = primero->dato;
     cola->cabecera1->sig = primero->sig;
     primero->sig->ant = cola->cabecera1;
     free(primero);
-    return true;
+    return 1;
 }
 
 void mostrar_cola(Cola *cola) {
