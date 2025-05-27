@@ -8,19 +8,6 @@ struct Nodo {
     struct Nodo* anterior;       // Enlace al nodo anterior
 };
 
-// Función para crear un nuevo nodo
-struct Nodo* crearNodo(int valor) {
-    struct Nodo* nuevo = (struct Nodo*)malloc(sizeof(struct Nodo));
-    if (nuevo == NULL) {
-        printf("Error: No hay memoria disponible\n");
-        return NULL;
-    }
-    nuevo->dato = valor;
-    nuevo->siguiente = NULL;
-    nuevo->anterior = NULL;
-    return nuevo;
-}
-
 // Función para inicializar los dos nodos cabecera
 void inicializar(struct Nodo** frente, struct Nodo** final) {
     *frente = NULL;    // Nodo cabecera del frente
@@ -31,12 +18,15 @@ int estaVacia(struct Nodo* frente) {
     return frente == NULL;
 }
 
-// Función para insertar un elemento en la cola (meter dato)
-void meterDato(struct Nodo** frente, struct Nodo** final, int valor) {
+void insertar(struct Nodo** frente, struct Nodo** final, int valor) {
     // Crear nuevo nodo
-    struct Nodo* nuevo = crearNodo(valor);
-    if (nuevo == NULL) return;
+    struct Nodo* nuevo = (struct Nodo*)malloc(sizeof(struct Nodo));
+    if (nuevo == NULL) {
+        printf("Error: No hay memoria disponible\n");
+        return;
+    }
     
+    nuevo->dato = valor;
     // Enlaces dobles
     nuevo->siguiente = NULL;     // El nuevo nodo apunta a NULL
     nuevo->anterior = *final;    // El anterior del nuevo apunta al actual final
@@ -51,8 +41,7 @@ void meterDato(struct Nodo** frente, struct Nodo** final, int valor) {
     printf("Elemento %d insertado con éxito\n", valor);
 }
 
-// Función para eliminar un elemento de la cola (sacar dato)
-int sacarDato(struct Nodo** frente, struct Nodo** final) {
+int eliminar(struct Nodo** frente, struct Nodo** final) {
     if (estaVacia(*frente)) {
         printf("Error: La cola está vacía\n");
         return -1;
@@ -89,22 +78,13 @@ void mostrarCola(struct Nodo* frente) {
     printf("NULL\n");
 }
 
-// Función para liberar toda la memoria de la cola
-void liberarCola(struct Nodo** frente, struct Nodo** final) {
-    while (!estaVacia(*frente)) {
-        sacarDato(frente, final);
-    }
-}
-
 int main() {
     struct Nodo* frente = NULL;
     struct Nodo* final = NULL;
     int opcion, valor;
 
-    inicializar(&frente, &final);
-
     do {
-        printf("\n--- Menú Cola Dinámica con Nodos Cabecera y Enlace Doble ---\n");
+        printf("\n--- Menú Cola Dinámica ---\n");
         printf("1. Insertar elemento\n");
         printf("2. Eliminar elemento\n");
         printf("3. Mostrar cola\n");
@@ -116,10 +96,10 @@ int main() {
             case 1:
                 printf("Ingrese valor a insertar: ");
                 scanf("%d", &valor);
-                meterDato(&frente, &final, valor);
+                insertar(&frente, &final, valor);
                 break;
             case 2:
-                valor = sacarDato(&frente, &final);
+                valor = eliminar(&frente, &final);
                 if (valor != -1) {
                     printf("Elemento eliminado: %d\n", valor);
                 }
@@ -128,8 +108,7 @@ int main() {
                 mostrarCola(frente);
                 break;
             case 4:
-                liberarCola(&frente, &final);
-                printf("Memoria liberada. Programa terminado\n");
+                printf("Programa terminado\n");
                 break;
             default:
                 printf("Opción inválida\n");
