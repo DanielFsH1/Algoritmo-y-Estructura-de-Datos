@@ -1,6 +1,10 @@
 #include <stdio.h>
-#define tam 5
+#define TAM 5
 
+/*
+ * Acceso mediante un puntero a variable estructura y puntero interno
+ * para recorrer un arreglo de estructuras.
+ */
 struct Domicilio {
     char calle[30];
     int num;
@@ -16,16 +20,16 @@ struct Persona {
 };
 
 struct Datos {
-    struct Persona arreglo[tam];
+    struct Persona arreglo[TAM];
     struct Persona *pt1;
 };
 
-int main() {
+int main(void) {
     struct Datos var, *pt = &var;
-    for(pt->pt1 = pt->arreglo; pt->pt1 < &pt->arreglo[tam]; pt->pt1 = pt->pt1 + 1) {
+    for (pt->pt1 = pt->arreglo; pt->pt1 < pt->arreglo + TAM; pt->pt1++) {
         fflush(stdin);
         printf("Nombre:\n");
-        gets(pt->pt1->nombre);
+        fgets(pt->pt1->nombre, sizeof(pt->pt1->nombre), stdin);
         fflush(stdin);
         printf("Edad:\n");
         scanf("%d", &pt->pt1->edad);
@@ -37,23 +41,23 @@ int main() {
         scanf(" %c", &pt->pt1->sexo);
         fflush(stdin);
         printf("Calle:\n");
-        gets(pt->pt1->dom.calle);
+        fgets(pt->pt1->dom.calle, sizeof(pt->pt1->dom.calle), stdin);
         fflush(stdin);
         printf("Numero:\n");
         scanf("%d", &pt->pt1->dom.num);
         fflush(stdin);
         printf("Colonia:\n");
-        gets(pt->pt1->dom.colonia);
+        fgets(pt->pt1->dom.colonia, sizeof(pt->pt1->dom.colonia), stdin);
         fflush(stdin);
     }
-    for(pt->pt1 = pt->arreglo; pt->pt1 < &pt->arreglo[tam]; pt->pt1 = pt->pt1 + 1) {
-        printf("En la celda %d la cadena %s en la direccion %lu\n", (int)(pt->pt1 - pt->arreglo), pt->pt1->nombre, pt->pt1->nombre);
-        printf("En la celda %d la edad %d en la direccion %lu\n", (int)(pt->pt1 - pt->arreglo), pt->pt1->edad, &pt->pt1->edad);
-        printf("En la celda %d la estatura %.2f en la direccion %lu\n", (int)(pt->pt1 - pt->arreglo), pt->pt1->est, &pt->pt1->est);
-        printf("En la celda %d el sexo %c en la direccion %lu\n", (int)(pt->pt1 - pt->arreglo), pt->pt1->sexo, &pt->pt1->sexo);
-        printf("En la celda %d la calle %s en la direccion %lu\n", (int)(pt->pt1 - pt->arreglo), pt->pt1->dom.calle, pt->pt1->dom.calle);
-        printf("En la celda %d el numero %d en la direccion %lu\n", (int)(pt->pt1 - pt->arreglo), pt->pt1->dom.num, &pt->pt1->dom.num);
-        printf("En la celda %d la colonia %s en la direccion %lu\n", (int)(pt->pt1 - pt->arreglo), pt->pt1->dom.colonia, pt->pt1->dom.colonia);
+    for (pt->pt1 = pt->arreglo; pt->pt1 < pt->arreglo + TAM; pt->pt1++) {
+        printf("Celda %d nombre %sDireccion %p\n", (int)(pt->pt1 - pt->arreglo), pt->pt1->nombre, (void*)pt->pt1->nombre);
+        printf("Celda %d edad %d Direccion %p\n", (int)(pt->pt1 - pt->arreglo), pt->pt1->edad, (void*)&pt->pt1->edad);
+        printf("Celda %d estatura %.2f Direccion %p\n", (int)(pt->pt1 - pt->arreglo), pt->pt1->est, (void*)&pt->pt1->est);
+        printf("Celda %d sexo %c Direccion %p\n", (int)(pt->pt1 - pt->arreglo), pt->pt1->sexo, (void*)&pt->pt1->sexo);
+        printf("Celda %d calle %sDireccion %p\n", (int)(pt->pt1 - pt->arreglo), pt->pt1->dom.calle, (void*)pt->pt1->dom.calle);
+        printf("Celda %d numero %d Direccion %p\n", (int)(pt->pt1 - pt->arreglo), pt->pt1->dom.num, (void*)&pt->pt1->dom.num);
+        printf("Celda %d colonia %sDireccion %p\n", (int)(pt->pt1 - pt->arreglo), pt->pt1->dom.colonia, (void*)pt->pt1->dom.colonia);
     }
     return 0;
 }

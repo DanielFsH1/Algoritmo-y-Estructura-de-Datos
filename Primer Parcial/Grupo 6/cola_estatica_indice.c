@@ -1,6 +1,10 @@
 #include <stdio.h>
 #define TAM 5
 
+/*
+ * Implementación de cola estática utilizando índices.
+ */
+
 struct Cola {
     int arreglo[TAM];
     int frente;
@@ -53,7 +57,7 @@ int menu() {
     return op;
 }
 
-int main() {
+int main(void) {
     int dato;
     struct Cola cola;
     resetear(&cola);

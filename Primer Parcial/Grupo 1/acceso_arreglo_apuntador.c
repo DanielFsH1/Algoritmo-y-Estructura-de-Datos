@@ -1,18 +1,23 @@
 #include <stdio.h>
 
-int main()
+/*
+ * Ejemplo de acceso a un arreglo utilizando un puntero.
+ * Se ingresan cinco enteros y posteriormente se muestran con
+ * su respectiva dirección de memoria.
+ */
+int main(void)
 {
-    int arreglo[5];
-    int *ptr; //declaracion de puntero
-    
-    for(ptr=arreglo; ptr<&arreglo[5]; ptr++){
+    int datos[5];
+    int *p;             /* Puntero que recorrerá el arreglo */
+
+    for (p = datos; p < datos + 5; p++) {
         printf("Ingresa un numero entero: ");
-        scanf("%d", ptr);
+        scanf("%d", p);
     }
-    
-    for(ptr=arreglo; ptr<&arreglo[5]; ptr++)
-        printf("Celda:%d Direccion de memoria: %lu Numero: %d\n", (int)(ptr-arreglo), ptr, *ptr);
+
+    for (p = datos; p < datos + 5; p++) {
+        printf("Celda:%d Direccion: %p Numero: %d\n",
+               (int)(p - datos), (void*)p, *p);
+    }
     return 0;
-    
-    //Luis Enrique Cruz Estrella
 }

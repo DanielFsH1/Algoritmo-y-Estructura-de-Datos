@@ -1,6 +1,9 @@
 #include <stdio.h>
 #define TAM 5
 
+/*
+ * Acceso a un arreglo de estructuras mediante índice.
+ */
 struct Domicilio {
     char calle[30];
     int num;
@@ -20,12 +23,12 @@ struct datos {
     int i;
 };
 
-int main() {
+int main(void) {
     struct datos var;
     for (var.i = 0; var.i < TAM; var.i++) {
         printf("\nIngresa el nombre: ");
         fflush(stdin);
-        gets(var.arreglo[var.i].nombre);
+        fgets(var.arreglo[var.i].nombre, sizeof(var.arreglo[var.i].nombre), stdin);
         printf("Ingresa la edad: ");
         scanf("%d", &var.arreglo[var.i].edad);
         fflush(stdin);
@@ -33,19 +36,19 @@ int main() {
         scanf("%f", &var.arreglo[var.i].estatura);
         fflush(stdin);
         printf("Ingresa el sexo: ");
-        scanf("%c", &var.arreglo[var.i].sexo);
+        scanf(" %c", &var.arreglo[var.i].sexo);
         fflush(stdin);
         printf("Ingresa la calle: ");
         fflush(stdin);
-        gets(var.arreglo[var.i].domicilio.calle);
+        fgets(var.arreglo[var.i].domicilio.calle, sizeof(var.arreglo[var.i].domicilio.calle), stdin);
         printf("Ingresa el número: ");
         scanf("%d", &var.arreglo[var.i].domicilio.num);
         fflush(stdin);
         printf("Ingresa la colonia: ");
         fflush(stdin);
-        gets(var.arreglo[var.i].domicilio.colonia);
+        fgets(var.arreglo[var.i].domicilio.colonia, sizeof(var.arreglo[var.i].domicilio.colonia), stdin);
     }
-    printf("\nTamaño de struct datos: %d\n", (int)sizeof(struct datos));
+    printf("\nTamaño de struct datos: %lu\n", sizeof(struct datos));
     for (var.i = 0; var.i < TAM; var.i++) {
         printf("\nCelda %d:", var.i);
         printf("\nNombre: %s | Dirección: %p", var.arreglo[var.i].nombre, (void*)&var.arreglo[var.i].nombre);

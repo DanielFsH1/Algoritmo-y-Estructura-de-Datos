@@ -1,34 +1,37 @@
 #include <stdio.h>
-#include <stdlib.h>
 
+/*
+ * Acceso a arreglo de estructuras mediante índice.
+ */
 struct persona {
     char nombre[30];
-    int edad;
+    int  edad;
     float est;
     char sexo;
 };
 
-int main() {
-    struct persona arreglo[5];
-    int i;
-    printf("El tamaño del dato persona es %ld\n", sizeof(struct persona));
-    for (i = 0; i < 5; i++) {
+int main(void) {
+    struct persona datos[5];
+    int idx;
+
+    printf("El tamaño del dato persona es %lu\n", sizeof(struct persona));
+    for (idx = 0; idx < 5; idx++) {
         printf("\nIngresa nombre: ");
-        fgets(arreglo[i].nombre, 30, stdin);
+        fgets(datos[idx].nombre, sizeof(datos[idx].nombre), stdin);
         printf("Ingresa edad: ");
-        scanf("%d", &arreglo[i].edad);
+        scanf("%d", &datos[idx].edad);
         printf("Ingresa estatura: ");
-        scanf("%f", &arreglo[i].est);
+        scanf("%f", &datos[idx].est);
         printf("Ingresa sexo: ");
-        scanf(" %c", &arreglo[i].sexo);
+        scanf(" %c", &datos[idx].sexo);
         fflush(stdin);
     }
-    for (i = 0; i < 5; i++) {
-        printf("\n\nEn la celda %d está en la dirección %lu", i, &arreglo[i]);
-        printf("\nEl nombre es %s y está en la dirección %lu", arreglo[i].nombre, &arreglo[i].nombre);
-        printf("\nLa edad es %d y está en la dirección %lu", arreglo[i].edad, &arreglo[i].edad);
-        printf("\nLa estatura es %.2f y está en la dirección %lu", arreglo[i].est, &arreglo[i].est);
-        printf("\nEl sexo es %c y está en la dirección %lu\n", arreglo[i].sexo, &arreglo[i].sexo);
+    for (idx = 0; idx < 5; idx++) {
+        printf("\n\nCelda %d en direccion %p", idx, (void*)&datos[idx]);
+        printf("\nNombre: %sDireccion: %p", datos[idx].nombre, (void*)&datos[idx].nombre);
+        printf("\nEdad: %d Direccion: %p", datos[idx].edad, (void*)&datos[idx].edad);
+        printf("\nEstatura: %.2f Direccion: %p", datos[idx].est, (void*)&datos[idx].est);
+        printf("\nSexo: %c Direccion: %p\n", datos[idx].sexo, (void*)&datos[idx].sexo);
     }
     return 0;
 }

@@ -1,6 +1,10 @@
 #include <stdio.h>
 #define TAM 5
 
+/*
+ * Implementación de una pila estática manejada mediante índices.
+ */
+
 struct Pila {
     int arreglo[TAM];
     int tope;
@@ -58,7 +62,7 @@ int menu() {
     return op;
 }
 
-int main() {
+int main(void) {
     int num;
     struct Pila pila;
     pila.tope = 0;

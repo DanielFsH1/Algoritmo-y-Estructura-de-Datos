@@ -1,6 +1,11 @@
 #include <stdio.h>
 #define TAM 5
 
+/*
+ * Cola estática donde los punteros a movimiento y salida son manejados
+ * mediante dobles punteros.
+ */
+
 struct Cola
 {
     int arreglo[TAM];
@@ -80,7 +85,7 @@ int menu()
     return op;
 }
 
-int main()
+int main(void)
 {
 
     int dato;

@@ -1,6 +1,10 @@
 #include <stdio.h>
 #define TAM 5
 
+/*
+ * Cola estática controlada mediante punteros dentro de su estructura.
+ */
+
 struct Cola
 {
     int arreglo[TAM];
@@ -78,7 +82,7 @@ int menu()
     return op;
 }
 
-int main()
+int main(void)
 {
 
     int dato;

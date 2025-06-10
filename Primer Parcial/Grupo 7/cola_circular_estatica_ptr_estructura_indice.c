@@ -1,6 +1,10 @@
 #include <stdio.h>
 #define TAM 5
 
+/*
+ * Cola circular estática con puntero a estructura e índices.
+ */
+
 struct Cola {
     int arreglo[TAM];
     int frente;
@@ -58,7 +62,7 @@ int menu() {
     return op;
 }
 
-int main() {
+int main(void) {
     int dato;
     struct Cola cola;
     struct Cola *ptrCola = &cola;
