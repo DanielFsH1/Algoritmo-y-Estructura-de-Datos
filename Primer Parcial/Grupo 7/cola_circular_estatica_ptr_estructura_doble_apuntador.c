@@ -1,6 +1,10 @@
 #include <stdio.h>
 #define TAM 5
 
+/*
+ * Implementación de cola circular utilizando dobles punteros dentro de la estructura.
+ */
+
 struct Cola {
     int arreglo[TAM];
     int *posiciones[TAM];
@@ -68,7 +72,7 @@ int menu() {
     return op;
 }
 
-int main() {
+int main(void) {
     int dato;
     struct Cola cola;
     struct Cola *c = &cola;

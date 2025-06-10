@@ -1,35 +1,40 @@
-#include<stdio.h>
+#include <stdio.h>
 
+/*
+ * Manejo de un arreglo de estructuras mediante punteros.
+ */
 struct persona {
-    char nombre[30];
-    int edad;
+    char  nombre[30];
+    int   edad;
     float estatura;
-    char sexo;
+    char  sexo;
 };
 
-int main() {
-    struct persona arreglo[5], *ptr;
-    for(ptr=arreglo; ptr<&arreglo[5]; ptr++){
+int main(void) {
+    struct persona datos[5], *p;
+
+    for (p = datos; p < datos + 5; p++) {
         printf("\nIngresa el nombre: ");
-        gets(ptr->nombre);
+        fgets(p->nombre, sizeof(p->nombre), stdin);
         fflush(stdin);
         printf("Ingresa la edad: ");
-        scanf("%d", &ptr->edad);
+        scanf("%d", &p->edad);
         fflush(stdin);
         printf("Ingresa la estatura: ");
-        scanf("%f", &ptr->estatura);
+        scanf("%f", &p->estatura);
         fflush(stdin);
         printf("Ingresa el sexo: ");
-        scanf("%c", &ptr->sexo);
+        scanf(" %c", &p->sexo);
         fflush(stdin);
     }
-    printf("La estructura mide %d\n", sizeof(struct persona));
-    for(ptr=arreglo; ptr<&arreglo[5]; ptr++){
-        printf("\nEn la celda %d y en la direccion %lu\n", (int)(ptr-&arreglo[0]), ptr);
-        printf("Nombre: %s Direccion : %lu\n", ptr->nombre, &ptr->nombre);
-        printf("Edad: %d Direccion : %lu\n", ptr->edad, &ptr->edad);
-        printf("Estatura: %f Direccion : %lu\n", ptr->estatura, &ptr->estatura);
-        printf("Sexo: %c Direccion : %lu\n", ptr->sexo, &ptr->sexo);
+
+    printf("La estructura mide %lu bytes\n", sizeof(struct persona));
+    for (p = datos; p < datos + 5; p++) {
+        printf("\nCelda %d en direccion %p\n", (int)(p - datos), (void*)p);
+        printf("Nombre: %sDireccion : %p\n", p->nombre, (void*)&p->nombre);
+        printf("Edad: %d Direccion : %p\n", p->edad, (void*)&p->edad);
+        printf("Estatura: %f Direccion : %p\n", p->estatura, (void*)&p->estatura);
+        printf("Sexo: %c Direccion : %p\n", p->sexo, (void*)&p->sexo);
     }
     return 0;
 }

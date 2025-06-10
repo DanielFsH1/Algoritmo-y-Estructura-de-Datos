@@ -1,19 +1,25 @@
 #include <stdio.h>
 
+/*
+ * Ejemplo de estructura que contiene un arreglo y un puntero
+ * para recorrerlo.
+ */
 struct Datos {
     int numeros[5];
     int *ptr;
 };
 
-int main (){
-    struct Datos dato;
-    for(dato.ptr=dato.numeros; dato.ptr<&dato.numeros[5]; dato.ptr++){
-        printf("Ingresa el dato numero %d: ", (int)(dato.ptr-dato.numeros)+1);
-        scanf("%d",dato.ptr);
+int main(void){
+    struct Datos datos;
+
+    for (datos.ptr = datos.numeros; datos.ptr < datos.numeros + 5; datos.ptr++) {
+        printf("Ingresa el dato numero %d: ", (int)(datos.ptr - datos.numeros) + 1);
+        scanf("%d", datos.ptr);
     }
 
-    for(dato.ptr=dato.numeros; dato.ptr<&dato.numeros[5]; dato.ptr++){
-        printf("\nEn la celda #%d esta el dato %d con la direccion %lu", (int)(dato.ptr-dato.numeros), *dato.ptr, dato.ptr);
+    for (datos.ptr = datos.numeros; datos.ptr < datos.numeros + 5; datos.ptr++) {
+        printf("Celda %d => %d (dir %p)\n",
+               (int)(datos.ptr - datos.numeros), *datos.ptr, (void*)datos.ptr);
     }
 
     return 0;

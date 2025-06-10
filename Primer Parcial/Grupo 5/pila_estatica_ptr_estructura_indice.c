@@ -1,5 +1,9 @@
 #include <stdio.h>
 #define TAM 5
+
+/*
+ * Pila estática utilizando un puntero a la estructura y manejo por índice.
+ */
 struct Pila {
     int arreglo[TAM];
     int tope;
@@ -57,7 +61,7 @@ int menu() {
     return op;
 }
 
-int main() {
+int main(void) {
     int num;
     struct Pila pila, *miptr;
     miptr = &pila;

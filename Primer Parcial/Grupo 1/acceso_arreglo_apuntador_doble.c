@@ -1,23 +1,24 @@
 #include <stdio.h>
 
-int main() {
-    int arreglo[5];  // Declaración de un arreglo de 5 enteros
-    int *ptr1, **ptr2;  // ptr1 es un puntero a entero, ptr2 es un puntero a puntero a entero
+/*
+ * Uso de doble puntero para rellenar e imprimir un arreglo.
+ */
+int main(void) {
+    int datos[5];                  /* arreglo de enteros */
+    int *p1, **p2;                 /* p1 apunta a entero, p2 a puntero de entero */
 
-    ptr1 = arreglo;  // ptr1 apunta al inicio del arreglo
+    p1 = datos;                    /* p1 inicia al comienzo del arreglo */
 
-    // Bucle para ingresar valores en el arreglo usando doble puntero
-    for (ptr2 = &ptr1; *ptr2 < &arreglo[5]; *ptr2 = *ptr2 + 1) {
-        printf("Ingrese dato entero: \n");
-        scanf("%d", *ptr2);  // Se almacena el valor ingresado en la dirección apuntada por *ptr2
+    /* Ingreso de datos mediante el doble puntero */
+    for (p2 = &p1; *p2 < datos + 5; (*p2)++) {
+        printf("Ingrese dato entero: ");
+        scanf("%d", *p2);
     }
 
-    // Bucle para imprimir los valores almacenados junto con sus direcciones
-    for (ptr1 = arreglo, ptr2 = &ptr1; *ptr2 < &arreglo[5]; *ptr2 = *ptr2 + 1) {
-        printf("\nEn la celda %d está el valor %d en la dirección %p",
-               (int)(*ptr2 - arreglo),  // Índice calculado restando la dirección base
-               **ptr2,  // Valor almacenado en la posición apuntada por *ptr2
-               *ptr2);  // Dirección de memoria del elemento del arreglo
+    /* Impresión de valores y direcciones usando el doble puntero */
+    for (p1 = datos, p2 = &p1; *p2 < datos + 5; (*p2)++) {
+        printf("Celda %d -> valor %d en direccion %p\n",
+               (int)(*p2 - datos), **p2, *p2);
     }
 
     return 0;

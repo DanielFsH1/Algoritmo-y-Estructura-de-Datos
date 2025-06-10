@@ -1,6 +1,10 @@
 #include <stdio.h>
 #define TAM 5
 
+/*
+ * Variante con doble puntero a la estructura de cola circular.
+ */
+
 struct Cola {
     int arreglo[TAM];
     int *posiciones[TAM];
@@ -68,7 +72,7 @@ int menu() {
     return op;
 }
 
-int main() {
+int main(void) {
     int dato;
     struct Cola cola;
     struct Cola *ptr = &cola;

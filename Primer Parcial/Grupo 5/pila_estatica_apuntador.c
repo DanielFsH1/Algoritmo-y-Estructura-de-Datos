@@ -1,6 +1,10 @@
 #include <stdio.h>
 #define TAM 5
 
+/*
+ * Implementación sencilla de una pila estática usando punteros.
+ */
+
 struct Pila {
     int arreglo[TAM];
     int *ptr;
@@ -58,10 +62,11 @@ int menu() {
     return op;
 }
 
-int main() {
+int main(void) {
     int num;
     struct Pila pila;
-    pila.ptr = pila.arreglo;
+    pila.ptr = pila.arreglo; /* apuntamos al inicio del arreglo */
+    /* Ciclo principal del programa */
     for (;;) {
         if (vaciopila(&pila) == 0) {
             mostrarpila(&pila);

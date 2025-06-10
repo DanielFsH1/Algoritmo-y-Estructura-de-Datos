@@ -1,20 +1,25 @@
 #include <stdio.h>
 
+/*
+ * Puntero a estructura con acceso a elementos mediante índice.
+ */
 struct Datos {
     int numeros[5];
     int i;
 };
 
-int main (){
-    struct Datos dato, *ptrd;
-    ptrd=&dato;
-    for(ptrd->i=0; ptrd->i<5; ptrd->i++){
-        printf("Ingresa el dato numero %d: ", ptrd->i+1);
-        scanf("%d",&ptrd->numeros[ptrd->i]);
+int main(void){
+    struct Datos dato, *pd;
+    pd = &dato;
+
+    for (pd->i = 0; pd->i < 5; pd->i++) {
+        printf("Ingresa el dato numero %d: ", pd->i + 1);
+        scanf("%d", &pd->numeros[pd->i]);
     }
 
-    for(ptrd->i=0; ptrd->i<5; ptrd->i++){
-        printf("\nEn la celda #%d esta el dato %d con la direccion %lu", ptrd->i+1, ptrd->numeros[ptrd->i], &ptrd->numeros[ptrd->i]);
+    for (pd->i = 0; pd->i < 5; pd->i++) {
+        printf("Celda %d => %d (dir %p)\n",
+               pd->i + 1, pd->numeros[pd->i], (void*)&pd->numeros[pd->i]);
     }
 
     return 0;

@@ -1,19 +1,24 @@
 #include <stdio.h>
 
-int main()
+/*
+ * Acceso a un arreglo mediante índice.
+ * El usuario ingresa cinco valores que luego son
+ * mostrados junto con su dirección de memoria.
+ */
+int main(void)
 {
-    int arreglo[5];
-    int i; // índice
-    
-    for(i = 0; i < 5; i++) {
+    int datos[5];
+    int idx; /* variable índice */
+
+    for (idx = 0; idx < 5; idx++) {
         printf("Ingresa un numero entero: ");
-        scanf("%d", &arreglo[i]);
+        scanf("%d", &datos[idx]);
     }
 
-    for(i = 0; i < 5; i++)
-        printf("Celda:%d Direccion de memoria: %lu Numero: %d\n", i, &arreglo[i], arreglo[i]);
-    
-    return 0;
+    for (idx = 0; idx < 5; idx++) {
+        printf("Celda:%d Direccion: %p Numero: %d\n",
+               idx, (void*)&datos[idx], datos[idx]);
+    }
 
-    //Luis Enrique Cruz Estrella
+    return 0;
 }

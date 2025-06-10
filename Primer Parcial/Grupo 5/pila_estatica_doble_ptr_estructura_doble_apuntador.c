@@ -1,6 +1,10 @@
 #include <stdio.h>
 #define TAM 5
 
+/*
+ * Variante que utiliza doble puntero para manipular la pila.
+ */
+
 struct Pila {
     int arreglo[TAM];
     int *ptr1, **ptr2;
@@ -61,7 +65,7 @@ int menu()
     return op;
 }
 
-int main(){
+int main(void){
     struct Pila pila, *miptr, **miptr2;
     int dato, num;
     miptr=&pila;

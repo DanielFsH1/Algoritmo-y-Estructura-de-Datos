@@ -1,6 +1,10 @@
 #include <stdio.h>
 #define TAM 5
 
+/*
+ * Pila estática donde la estructura es accedida mediante punteros dobles.
+ */
+
 struct Pila {
     int arreglo[TAM];
     int *ptr1, **ptr2;
@@ -61,7 +65,7 @@ int menu()
     return op;
 }
 
-int main(){
+int main(void){
     struct Pila pila, *miptr;
     int dato, num;
     miptr=&pila;

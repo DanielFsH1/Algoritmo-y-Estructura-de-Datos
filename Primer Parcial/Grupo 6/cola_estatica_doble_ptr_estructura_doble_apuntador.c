@@ -1,6 +1,10 @@
 #include <stdio.h>
 #define TAM 5
 
+/*
+ * Variante que recibe un doble puntero a la estructura para manipular la cola.
+ */
+
 struct Cola
 {
     int arreglo[TAM];
@@ -72,7 +76,7 @@ int menu()
     return op;
 }
 
-int main()
+int main(void)
 {
     int dato;
     struct Cola cola;
